@@ -79,7 +79,7 @@ Identificamos o domínio `htb.local`, então add no ***/etc/hosts***
 
 ![Untitled](../assets/img/HTB/HTB-Forest/Untitled.png)
 
----
+
 
 ## **DNS - UDP/TCP 53**
 
@@ -315,7 +315,7 @@ Vamos olhar os membros do grupo Domain Admin:
 
 O grupo ***`Domain Admin`*** tem apenas 1 membro, que é o ***`Administrator`.***
 
----
+
 
 ## **AS-REP Roasting**
 
@@ -363,7 +363,7 @@ Colocaremos a lista num arquivo e tentaremos o Atttack As-Rep Roasting.
 
 Senha do usuário **svc-alfresco** encontrada: **s3rvice**
 
----
+
 
 ## **Pegando Shell**
 
@@ -383,7 +383,7 @@ Senha do usuário **svc-alfresco** encontrada: **s3rvice**
 
 ![Untitled](../assets/img/HTB/HTB-Forest/Untitled%201.png)
 
----
+
 
 ## Melhorando o shell
 
@@ -577,7 +577,7 @@ Faremos um ataque PTH com PsExec:
 
 # HABEMUS ROOT!!!
 
----
+
 
 # Pegando a FLAG
 
