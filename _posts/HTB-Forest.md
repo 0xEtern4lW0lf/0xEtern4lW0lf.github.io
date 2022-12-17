@@ -1,10 +1,14 @@
-# Forest
-
 ---
+title: "Forest - HTB"
+categories: [HackTheBox, Easy]
+tags: [Easy,Windows]
+mermaid: false
+---
+
+# Forest - HTB
 
 [https://app.hackthebox.com/machines/Forest](https://app.hackthebox.com/machines/Forest)
 
-[https://0xdf.gitlab.io/2020/03/21/htb-forest.html](https://0xdf.gitlab.io/2020/03/21/htb-forest.html)
 
 # Scanning
 
