@@ -21,7 +21,7 @@ timezone: Asia/Shanghai
 
 title: 0xEtern4lW0lf                          # the main title
 
-tagline: A simple infosec blog   # it will display as the sub-title
+tagline: A blog of writeup CTFs   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
