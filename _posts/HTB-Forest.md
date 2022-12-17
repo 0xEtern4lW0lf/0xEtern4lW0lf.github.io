@@ -3,6 +3,7 @@ title: "Forest - HTB"
 categories: [HackTheBox, Easy]
 tags: [Easy,Windows]
 mermaid: false
+image:
 ---
 
 # Forest - HTB
