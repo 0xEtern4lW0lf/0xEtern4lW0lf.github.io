@@ -21,7 +21,7 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -p $ports 10.10.10.161
 ```
     
-```bash
+```
 PORT      STATE SERVICE      VERSION
 53/tcp    open  domain       Simple DNS Plus
 88/tcp    open  kerberos-sec Microsoft Windows Kerberos (server time: 2022-10-18 12:52:23Z)
@@ -177,7 +177,7 @@ smbmap -H 10.10.10.161
 ```
     
 ```bash
-smbclient -N -L [//10.10.10.161](https://10.10.10.161/)
+smbclient -N -L //10.10.10.161
 ```
     
 ```

