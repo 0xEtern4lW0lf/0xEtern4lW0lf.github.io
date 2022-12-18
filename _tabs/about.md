@@ -12,8 +12,8 @@ I am a cybersecurity professional.
 This is a blog with CTFs writeup.
 
 
-**Contact** 
-
-ramonmarsal.tech@gmail.com
+> **Contact:**  
+> ramonmarsal.tech@gmail.com
+> https://www.linkedin.com/in/ramonmarsaltech/
 
 
