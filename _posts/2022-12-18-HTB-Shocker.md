@@ -45,7 +45,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.56 | grep ^[0-9] | cut -d
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled.png)
 
 
-## **Port 80 (http)**
+## Port 80 (http)
 
 There’re a simple page web.
 
@@ -59,7 +59,7 @@ The source code also don’t have nothing.
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%202.png)
 
-### **Fuzzing Diretório WEB**
+### Fuzzing Diretório WEB
 
 We will make a fuzzing with the tool `gobuster`.
 
@@ -101,7 +101,7 @@ We find shellshock.
 
 # Exploration
 
-## **Exploiting ShellShock**
+## Exploiting ShellShock
 
 > ShellShock (also known as Bashdoor or CVE-2014-6271) was a vulnerability in Bash discovered in 2014 that has to do with the Bash syntax for defining a function. The vuln allowed that the attacker run commands in places where they should to do only something safe like setting a environment variable.
 > 
