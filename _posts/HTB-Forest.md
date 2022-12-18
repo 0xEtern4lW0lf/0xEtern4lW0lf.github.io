@@ -77,7 +77,7 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 
 Identificamos o domínio `htb.local`, então add no ***/etc/hosts***
 
-![Untitled](../assets/img/HTB/HTB-Forest/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled.png)
 
 
 
@@ -381,7 +381,7 @@ Senha do usuário **svc-alfresco** encontrada: **s3rvice**
 
 ### HABEMUSS!!!
 
-![Untitled](../assets/img/HTB/HTB-Forest/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%201.png)
 
 
 
@@ -411,7 +411,7 @@ Analisando o resultado:
 
 Temos o caminho do sucesso na seção `Find Shortest Paths to Domain Admins`
 
-![Untitled](../assets/img/HTB/HTB-Forest/Untitled%202.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%202.png)
 
 ## Priv Esc
 
@@ -573,7 +573,7 @@ Faremos um ataque PTH com PsExec:
 
 `impacket-psexec [administrator@10.10.10.161](mailto:administrator@10.10.10.161) -hashes :32693b11e6aa90eb43d32c72a07ceea6`
 
-![Untitled](../assets/img/HTB/HTB-Forest/Untitled%203.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%203.png)
 
 # HABEMUS ROOT!!!
 
