@@ -1,7 +1,7 @@
 ---
 title: "Forest - HTB"
 categories: [HackTheBox, Easy]
-tags: [Easy,Windows]
+tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,]
 mermaid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 ---
@@ -9,6 +9,8 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 # Introdution
 
 [https://app.hackthebox.com/machines/Forest](https://app.hackthebox.com/machines/Forest)
+
+This is a easy windows machine.
 
 **Have a good time!**
 
@@ -189,7 +191,7 @@ SMB1 disabled -- no workgroup available
 ```
     
 
-## **RPC - TCP 445**
+## RPC - TCP 445
 
 Enumeraremos o RPC 
 
@@ -389,7 +391,7 @@ Senha do usuário **svc-alfresco** encontrada: **s3rvice**
 
 
 
-## **Pegando Shell**
+## Pegando Shell
 
 ### Psexec
 
