@@ -30,7 +30,7 @@ graph TD
     B --> C[Gobuster]
     C --> |Gobuster| D[/cgi-bin/user.sh/]
     D --> ShellShock --> E[RCE]
-    E --> |Script Python| F[Shell Shell]
+    E --> |Script Python| F[Shell]
     F --> G[Root]
 ```
 
