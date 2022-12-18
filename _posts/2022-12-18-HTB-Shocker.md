@@ -9,7 +9,9 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Shocker.png
 
 # Introdution
 
+
 [https://app.hackthebox.com/machines/Shocker](https://app.hackthebox.com/machines/Shocker)
+
 
 This was a machine very easy in Hack The Box. In it we explore a vulnerability called ShellShock. 
 
@@ -18,6 +20,7 @@ The privilege escalation was with sudo in the perl binary.
 The exploit for this machine is on the end of the post.
 
 **Have a good time!**
+
 
 ## Diagram
 
@@ -40,6 +43,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.56 | grep ^[0-9] | cut -d
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled.png)
+
 
 ## **Port 80 (http)**
 
