@@ -34,43 +34,6 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.11.125 | grep ^[0-9] | cut -
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled.png)
 
-## Port 53 (DNS)
-
-For enumeration of DNS, the first thing to do is to try resolveding
-
-For DNS enumeration, the first thing to do is try to resolve the Cronos IPs. I'll use `nslookup`, setting the server to Cronos and then search Cronos IP.
-
-```bash
-nslookup 10.10.10.13 10.10.10.13
-```
-
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%201.png)
-
-We verify that the base domain is `cronos.htb`
-
-Whenever there is TCP DNS, it is worth trying a zone transfer, which returns another two subdomains: `admin` and `www`
-
-```bash
-dig axfr @10.10.10.13 cronos.htb
-```
-
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%202.png)
-
-Add the subdomain in */etc/hosts*
-
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%203.png)
-
----
-
-### Brute Force Subdomain
-
-I'll run a `gobuster` , but it will only return the three known ones:
-
-```bash
-gobuster dns -d cronos.htb -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt -t 100
-```
-
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%204.png)
 
 ## Porta 80 (http)
 
