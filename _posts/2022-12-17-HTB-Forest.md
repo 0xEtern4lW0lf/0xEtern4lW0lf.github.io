@@ -1,6 +1,6 @@
 ---
 title: "Forest - HTB"
-categories: [HackTheBox, Easy]
+categories: [HackTheBox, Windows, Easy]
 tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png

