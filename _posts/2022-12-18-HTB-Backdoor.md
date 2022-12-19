@@ -1,7 +1,7 @@
 ---
 title: "Backdoor - HTB"
-categories: [HackTheBox, Easy]
-tags: [Easy,Linux,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
+categories: [HackTheBox, Linux, Easy]
+tags: [Easy,Linux,Web,WordPress,DirectoryTraversal,PathTraversal,Screen,EnumProcess]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Backdoor.png
 ---
@@ -179,11 +179,15 @@ curl -o- -s http://backdoor.htb/wp-content/plugins/ebook-download/filedownload.p
 ```
 
 > `-s` para limpar a saída.
-`tr '\000' ' '` substitui os dados nulos por espaços.
-`cut -c55-` retira: ***/proc/self/cmdline/proc/self/cmdline/proc/self/cmdline***
-`cut -c32-` Retira: ***<script>window.close()</script>***
-`rev` Inverte a string
-> 
+>
+> `tr '\000' ' '` substitui os dados nulos por espaços.
+>
+> `cut -c55-` retira: ***/proc/self/cmdline/proc/self/cmdline/proc/self/cmdline***
+>
+> `cut -c32-` Retira: `<script>window.close()</script>`
+>
+> `rev` Inverte a string
+ 
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2014.png)
 
