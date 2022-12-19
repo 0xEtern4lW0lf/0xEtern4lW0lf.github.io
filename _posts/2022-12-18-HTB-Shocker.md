@@ -1,6 +1,6 @@
 ---
 title: "Shocker - HTB"
-categories: [HackTheBox, Easy]
+categories: [Linux, Easy]
 tags: [Linux,Easy,Web,ShellShock,RCE]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Shocker.png
