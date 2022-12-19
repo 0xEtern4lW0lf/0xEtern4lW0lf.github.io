@@ -2,7 +2,7 @@
 title: "Forest - HTB"
 categories: [HackTheBox, Easy]
 tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
-mermaid: false
+mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 ---
 
@@ -12,6 +12,18 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 
 This is a easy windows machine. It is a domain controller that allows me to enumerate users over RPC, attack Kerberos with AS-REP Roasting, and use Win-RM to get a shell.
 
+
+## Diagram
+
+```mermaid
+graph TD
+    A[Enumeration] --> B
+    B(RPC - TCP 445) --> |Users list| C
+	C[AS-REP Roasting] --> |svc-alfresco| D
+    D[/Shell/] -->  E
+    E[Post-Exploration] --> |Enum AD| F
+    F(DCSync) --> G[Administrator]
+```
 
 **Have a good time!**
 
