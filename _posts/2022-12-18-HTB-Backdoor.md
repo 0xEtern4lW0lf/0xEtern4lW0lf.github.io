@@ -34,7 +34,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.11.125 | grep ^[0-9] | cut -
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled.png)
 
-## Porta **53** (DNS) ****
+## Port 53 (DNS)
 
 For enumeration of DNS, the first thing to do is to try resolveding
 
@@ -62,7 +62,7 @@ Add the subdomain in */etc/hosts*
 
 ---
 
-**Brute Force Subdomain**
+### Brute Force Subdomain
 
 I'll run a `gobuster` , but it will only return the three known ones:
 
@@ -72,7 +72,7 @@ gobuster dns -d cronos.htb -w /usr/share/seclists/Discovery/DNS/bitquark-subdoma
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%204.png)
 
-## **Porta 80 (http)**
+## Porta 80 (http)
 
 We have checked an incomplete web page, which is called the domain `backdoor.htb`
 
@@ -86,7 +86,7 @@ So we add the `backdoor.htb` domain to **/etc/hosts**.
 echo "10.10.11.125 backdoor.htb" | sudo tee -a /etc/hosts
 ```
 
-### **Fuzzing Diretório WEB**
+### Fuzzing Diretório WEB
 
 ```bash
 gobuster dir -u http://backdoor.htb/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 100 -e --no-error -r -x php,txt
@@ -114,7 +114,7 @@ http://10.10.11.125/wp-trackback.php     (Status: 200) [Size: 135]
 
 The target is running Wordpress. Let's enumerate the search for any vulnerable plugin.
 
-## **Directory Traversal**
+## Directory Traversal
 
 We found a plugin, which is vulnerable to **Directory Traversal**.
 
@@ -138,7 +138,7 @@ I tried logging in at `http://backdoor.htb/wp-login.php` but without success.
 
 ## Porta 1337 (???)
 
-### **Enumeração de Processos (Brute Force PID)**
+### Enumeração de Processos (Brute Force PID)
 
 We don't know which service is running.
 
@@ -266,7 +266,7 @@ We managed to shell with the `user` user.
 
 # Post-Exploration
 
-## **Update Shell**
+## Update Shell
 
 ```bash
 /usr/bin/script -qc /bin/bash /dev/null
@@ -276,7 +276,7 @@ export SHELL=bash;export TERM=xterm-256color
 python3.8 -c "import pty; pty.spawn('/bin/bash')"
 ```
 
-## **Privilege Escalation**
+## Privilege Escalation
 
 Enumerating the existing processes, we see that something is running `screen` as root (in a loop) as root. This command checks the `/var/run/screen/S-root` directory every one second, if empty it creates a root session on screen.
 
