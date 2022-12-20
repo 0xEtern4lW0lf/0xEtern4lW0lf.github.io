@@ -1,4 +1,10 @@
-# Legacy
+---
+title: "Legacy - HTB"
+categories: [Windows, Easy]
+tags: [Easy,Windows,EternalBlue,SMB,Metasploit]
+mermaid: true
+image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Legacy/Legacy.png
+---
 
 # Introdution
 
@@ -23,7 +29,7 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.4 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.4
 ```
 
-![Untitled](Legacy%20a11c36b6798143eb80067800a38e1cbf/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Legacy/Untitled.png)
 
 Two vulnerability was found related to **EternalBlue**.
 
@@ -31,7 +37,7 @@ Two vulnerability was found related to **EternalBlue**.
 sudo nmap -sS --script=vuln -p 135,139,445 10.10.10.4
 ```
 
-![Untitled](Legacy%20a11c36b6798143eb80067800a38e1cbf/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Legacy/Untitled%201.png)
 
 # Exploration
 
