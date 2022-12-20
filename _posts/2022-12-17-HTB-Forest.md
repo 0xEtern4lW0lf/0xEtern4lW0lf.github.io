@@ -12,6 +12,7 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 
 This is a easy windows machine. It is a domain controller that allows me to enumerate users over RPC, attack Kerberos with AS-REP Roasting, and use Win-RM to get a shell.
 
+**Have a good time!**
 
 ## Diagram
 

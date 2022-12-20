@@ -12,6 +12,8 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Backdoor.png
 
 This is a easy linux machine. We'll starts by finding a WordPress plugin with a directory traversal bug, that allows me to read files from the filesystem. We’ll explore this vuln to read the file in /proc and identify the service running in port 1337. This service is the GDB Server. We’ll explore the service to get the shell. To privilege escalation we’ll use the screen command.
 
+**Have a good time!**
+
 ## Diagram
 
 ```mermaid

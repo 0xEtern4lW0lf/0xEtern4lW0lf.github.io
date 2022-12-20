@@ -10,6 +10,8 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Active.png
 
 This box is a Windows Easy. We’ll start enumerate SMB, where the `Replication` share will find. There’re a file that contains a user and a pass encrypted with GPP. After to decrypt the pass, we will do a **Kerberoasting Attack.** We’ll get the hash Administrator user.
 
+**Have a good time!**
+
 ## Diagram
 
 ```mermaid
