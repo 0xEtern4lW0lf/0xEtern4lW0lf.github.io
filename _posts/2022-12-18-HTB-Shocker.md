@@ -45,7 +45,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.56 | grep ^[0-9] | cut -d
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled.png)
 
 
-## Port 80 (http)
+## Port 80 (HTTP)
 
 There’re a simple page web.
 
