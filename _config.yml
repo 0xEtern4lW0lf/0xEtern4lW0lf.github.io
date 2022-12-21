@@ -57,7 +57,7 @@ google_analytics:
   id: G-L9H3LR0FN5                # fill in your Google Analytics ID
   # Google Analytics pageviews report settings
   pv:
-    enabled: true
+    enabled: false
     proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
     cache_path:       # the local PV cache data, friendly to visitors from GFW region
 
@@ -86,6 +86,8 @@ avatar: https://img.freepik.com/premium-vector/wolf-vintage-logo-vector-illustra
 
 # boolean type, the global switch for ToC in posts.
 toc: true
+
+mermaid: true
 
 comments:
   active: disqus  # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
