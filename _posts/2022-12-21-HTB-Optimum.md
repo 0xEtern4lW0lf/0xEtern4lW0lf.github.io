@@ -19,6 +19,11 @@ The exploit for this machine is on the end of the post.
 
 **Have a good time!**
 
+<aside>
+📑 teste
+
+</aside>
+
 ## Diagram
 
 ```mermaid
