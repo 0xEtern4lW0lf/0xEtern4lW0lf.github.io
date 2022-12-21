@@ -57,11 +57,12 @@ Refer: [https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6287](https://cv
 There’re public exploits, but let’s explore manually.
 
 
-> 💡 The vuln is issue exists due to a poor regex in the file ParserLib.pas
+> The vuln is issue exists due to a poor regex in the file ParserLib.pas
 it will not handle null byte so a request to
 > 
 > 
 > `http://localhost:80/search=%00{.exec|cmd.}`
+>
 > This will stop regex from parse macro , and macro will be executed and remote code injection happen.
 > 
 {: .prompt-info }
