@@ -52,7 +52,7 @@ Refer: [https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6287](https://cv
 
 # Exploration
 
-## Exploring **RCE (**HTTP File Server 2.3.x**)**
+## Exploring RCE (HTTP File Server 2.3.x)
 
 There’re public exploits, but let’s explore manually.
 
