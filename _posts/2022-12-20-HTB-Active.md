@@ -66,11 +66,11 @@ cpassword="edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8
 
 > **Senhas GPP**
 > 
-> 
 > Whenever a new Group Policy Preference (GPP) is created, there is an xml file created on the SYSVOL share with this configuration data, including any passwords associated with the GPP. For security, Microsoft AES encrypts the password before storing it as `cpassword`. But then Microsoft [published the key](https://msdn.microsoft.com/en-us/library/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be.aspx) on MSDN!
 > 
 > Microsoft released a patch in 2014 that prevented administrators from putting passwords in GPP. But this patch does nothing about any of those breakable passwords that were already there, and as I understand it, pentesters are still regularly encountering them in 2018. For more details, check out this [AD security post](https://adsecurity.org/?p=2288).
 > 
+{: .prompt-info }
 
 ## Decrypting the GPP Password
 
