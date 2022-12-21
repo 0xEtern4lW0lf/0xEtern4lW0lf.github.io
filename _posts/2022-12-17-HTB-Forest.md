@@ -3,7 +3,6 @@ title: "Forest - HTB"
 categories: [Windows, Easy]
 tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
 date: 2022-12-17 12:12:12 -0300
-mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Forest.png
 ---
 
