@@ -88,10 +88,10 @@ avatar: https://img.freepik.com/premium-vector/wolf-vintage-logo-vector-illustra
 toc: true
 
 comments:
-  active: disqus  # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
+  active:  # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
   # The active options are as follows:
   disqus:
-    shortname: 0xEtern4lW0lf    # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+    shortname:    # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
   # utterances settings › https://utteranc.es/
   utterances:
     repo:         # <gh-username>/<repo>
@@ -144,7 +144,7 @@ defaults:
       type: posts
     values:
       layout: post
-      comments: false    # Enable comments in posts.
+      comments: true    # Enable comments in posts.
       toc: true         # Display TOC column in posts.
       # DO NOT modify the following parameter unless you are confident enough
       # to update the code of all other post links in this project.
