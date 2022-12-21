@@ -29,9 +29,9 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.100 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -p $ports 10.10.10.100
 ```
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Untitled.png){: .shadow}
 
-The `active.htb` domain was found, let’s insert in `/etc/hosts`
+The `active.htb` domain was found, let’s insert in `/etc/hosts`{: .filepath}
 
 ## **SMB - TCP 139/445**
 
@@ -100,9 +100,9 @@ smbclient //10.10.10.100/Users -U "active.htb\\SVC_TGS%GPPstillStandingStrong2k1
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Untitled%204.png)
 
-The `Users` share is the directory `C:\Users`
+The `Users` share is the directory `C:\Users`{: .filepath}
 
-In `/users/SVC_TGS/Desktop/`, We found the `user.txt`, which contains a flag. 
+In `/users/SVC_TGS/Desktop/`{: .filepath}, We found the `user.txt`, which contains a flag. 
 
 # Exploration
 
