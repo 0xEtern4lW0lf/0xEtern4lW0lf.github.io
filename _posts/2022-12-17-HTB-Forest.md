@@ -342,13 +342,9 @@ $krb5asrep$23$svc-alfresco@HTB:754aaeb7cf647e5365424893ee7e7345$1f45e994ceeda5db
 hashcat -m 18200 hash.txt /usr/share/wordlists/rockyou.txt --force
 ```
 
-| User               | Pass         |
-|:------------------:|:------------:|
-| svc-alfresco*      | s3rvice      | 
-
-> User: **svc-alfresco** 
->
-> Pass: **s3rvice**
+| User         | Pass     |
+|:-------------|---------:|
+| svc-alfresco | s3rvice  | 
 
 
 
