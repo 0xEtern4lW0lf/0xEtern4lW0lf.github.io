@@ -19,11 +19,6 @@ The exploit for this machine is on the end of the post.
 
 **Have a good time!**
 
-<aside>
-📑 teste
-
-</aside>
-
 ## Diagram
 
 ```mermaid
@@ -60,13 +55,18 @@ Refer: [https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6287](https://cv
 
 There’re public exploits, but let’s explore manually.
 
-> The vuln is issue exists due to a poor regex in the file ParserLib.pas
+<aside>
+
+> 💡 The vuln is issue exists due to a poor regex in the file ParserLib.pas
 it will not handle null byte so a request to
 > 
 > 
 > `http://localhost:80/search=%00{.exec|cmd.}`
 > This will stop regex from parse macro , and macro will be executed and remote code injection happen.
 > 
+
+</aside>
+
 
 Reference page: [https://packetstormsecurity.com/files/128243/HttpFileServer-2.3.x-Remote-Command-Execution.html](https://packetstormsecurity.com/files/128243/HttpFileServer-2.3.x-Remote-Command-Execution.html). 
 
