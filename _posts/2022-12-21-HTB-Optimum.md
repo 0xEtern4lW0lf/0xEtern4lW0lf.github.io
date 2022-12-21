@@ -19,9 +19,6 @@ The exploit for this machine is on the end of the post.
 
 **Have a good time!**
 
-```info
-teste
-```
 
 ## Diagram
 
@@ -67,7 +64,7 @@ it will not handle null byte so a request to
 > `http://localhost:80/search=%00{.exec|cmd.}`
 > This will stop regex from parse macro , and macro will be executed and remote code injection happen.
 > 
-
+{: .prompt-info }
 
 
 Reference page: [https://packetstormsecurity.com/files/128243/HttpFileServer-2.3.x-Remote-Command-Execution.html](https://packetstormsecurity.com/files/128243/HttpFileServer-2.3.x-Remote-Command-Execution.html). 
