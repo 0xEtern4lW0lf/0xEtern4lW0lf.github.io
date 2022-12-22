@@ -29,7 +29,7 @@ graph TD
 
 First step is to enumerate the box. For this we’ll use `nmap`.
 
-```python
+```bash
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.169 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -sC -sV -Pn -p $ports 10.10.10.169
 ```
 
