@@ -6,6 +6,7 @@ mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Cronos.png
 ---
 
+
 # Introdution
 
 [https://app.hackthebox.com/machines/Cronos](https://app.hackthebox.com/machines/Cronos)
@@ -126,17 +127,37 @@ We managed to inject linux commands with “`;" + "command"`
 
 ## www-data → root
 
-### Linpeas
+### Spawn Shell
+
+```bash
+/usr/bin/python -c 'import pty; pty.spawn("/bin/bash")'
+export SHELL=bash
+export TERM=xterm-256color
+```
+
+### **Enumeration**
 
 The Linpeas output reveals a php file running as root as a scheduled task in crontab.
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%209.png)
 
+```bash
+cat /etc/crontab
+```
+
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2010.png)
+
+We have write permission and this file is executable as root.
+
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2011.png)
+
+### Poison Artesan file
+
 We replaced the content of artisan with a php reverse shell.
 
 After 1 min crontab run the file as root.
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2010.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2012.png)
 
 # Get Shell - Script Automation
 
@@ -306,4 +327,4 @@ if __name__ == '__main__':
     main()
 ```
 
-![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2011.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2013.png)
