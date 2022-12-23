@@ -229,6 +229,8 @@ run
 
 We managed to shell with the `user` user.
 
+**HABEMUS SHELL!!!**
+
 # Post-Exploration
 
 ## Update Shell
@@ -277,3 +279,5 @@ But first we need to use a terminal:
 ```bash
 export TERM=xterm
 ```
+
+**HABEMUS ROOT!!!**

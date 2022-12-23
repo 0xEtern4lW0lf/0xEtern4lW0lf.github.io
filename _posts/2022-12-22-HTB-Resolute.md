@@ -89,6 +89,8 @@ evil-winrm -i 10.10.10.169 -P 5985 -u melanie -p 'Welcome123!'
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Resolute/Untitled%205.png)
 
+**HABEMUS SHELL!!!**
+
 # Post Exploration
 
 ## Melanie → Ryan
@@ -143,3 +145,5 @@ We verified that the ryan user is part of the DnsAdmins group, this group usuall
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Resolute/Untitled%209.png)
+
+**HABEMUS ROOT!!!**

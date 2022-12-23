@@ -41,7 +41,7 @@ sudo nmap -sS --script=vuln -p 135,139,445 10.10.10.4
 
 # Exploration
 
-## **Exploring EternalBlue**
+## Exploring EternalBlue
 
 We’ll use one of metasploit exploits.
 

@@ -104,6 +104,8 @@ exec|powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Untitled%207.png)
 
+**HABEMUS SHELL!!!**
+
 # Post Exploration
 
 ## WinPeas

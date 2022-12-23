@@ -123,6 +123,8 @@ We managed to inject linux commands with “`;" + "command"`
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%208.png)
 
+**HABEMUS SHELL!!!**
+
 # Post Exploration
 
 ## www-data → root
@@ -158,6 +160,8 @@ We replaced the content of artisan with a php reverse shell.
 After 1 min crontab run the file as root.
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2012.png)
+
+**HABEMUS ROOT!!!**
 
 # Get Shell - Script Automation
 
@@ -328,3 +332,5 @@ if __name__ == '__main__':
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%2013.png)
+
+ More scripts in [https://github.com/0xEtern4lW0lf](https://github.com/0xEtern4lW0lf).

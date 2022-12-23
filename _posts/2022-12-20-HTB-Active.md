@@ -33,7 +33,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.100 | grep ^[0-9] | cut -
 
 The `active.htb` domain was found, let’s insert in `/etc/hosts`{: .filepath}
 
-## **SMB - TCP 139/445**
+## SMB - TCP 139/445
 
 Lets enumerate the SMB using the `smbclient`*.*
 
@@ -106,7 +106,7 @@ In `/users/SVC_TGS/Desktop/`{: .filepath}, We found the `user.txt`, which contai
 
 # Exploration
 
-## **Kerberoasting**
+## Kerberoasting
 
 We'll use the **active.htb/SVC_TGS**:`GPPstillStandingStrong2k18` credentials to get a list of service usernames that are associated with regular user accounts.
 
@@ -134,21 +134,9 @@ hashcat -m 13100 -a 0 GetUserSPNs.out /usr/share/wordlists/rockyou.txt --force
 
 We found the pass to **Administrator**:`Ticketmaster1968`
 
-### Getting the **Shell**
+### Getting the Shell
 
 With the credencials found, We log through **psexec**:
-
-```bash
-impacket-psexec active.htb/administrator@10.10.10.100
-```
-
----
-
-# Post Exploration
-
-**Access:**
-
-**Administrator**:**Ticketmaster1968**
 
 ```bash
 impacket-psexec active.htb/administrator@10.10.10.100
@@ -157,6 +145,10 @@ impacket-psexec active.htb/administrator@10.10.10.100
 We have shell root.
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Untitled%207.png)
+
+**HABEMUS!!!**
+
+# Post Exploration
 
 ## **Spawn Shell**
 
