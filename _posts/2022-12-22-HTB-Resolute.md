@@ -7,15 +7,16 @@ render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Resolute/Resolute.png
 ---
 
+This is a medium box Windows. We starts enum users through RPC, where It was found a users list. Also It was found a password. Then It is done a Password Spray that allow to find melanie credential. Into in box, we discovered the ryan user credential. He is part of the DnsAdmins group, this group usually has elevated privilege. We explored this and get the Administrator shell.
+
+**Have a good time!**
+
+# Introdution
+
 [https://app.hackthebox.com/machines/Resolute](https://app.hackthebox.com/machines/Resolute)
 
 * **IP:** 10.10.10.169
 
-# Introdution
-
-This is a medium box Windows. We starts enum users through RPC, where It was found a users list. Also It was found a password. Then It is done a Password Spray that allow to find melanie credential. Into in box, we discovered the ryan user credential. He is part of the DnsAdmins group, this group usually has elevated privilege. We explored this and get the Administrator shell.
-
-**Have a good time!**
 
 ## Diagram
 
