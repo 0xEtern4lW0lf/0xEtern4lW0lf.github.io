@@ -1,6 +1,6 @@
 ---
 title: "Optimum - HTB"
-categories: [Easy,Windows]
+categories: [Easy]
 tags: [Windows,Easy,Web,RCE,HFS]
 mermaid: true
 render_with_liquid: false

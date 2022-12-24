@@ -1,6 +1,6 @@
 ---
 title: "Forest - HTB"
-categories: [Easy,Windows]
+categories: [Easy]
 tags: [Easy,Windows,AD,DNS,LDAP,Kerberos,AS-REP,RPC,DCSync]
 date: 2022-12-17 12:12:12 -0300
 mermaid: true
