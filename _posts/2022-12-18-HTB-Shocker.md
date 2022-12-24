@@ -6,13 +6,6 @@ mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Shocker.png
 ---
 
-
-# Introdution
-
-
-[https://app.hackthebox.com/machines/Shocker](https://app.hackthebox.com/machines/Shocker)
-
-
 This was a machine very easy in Hack The Box. In it we explore a vulnerability called ShellShock. 
 
 The privilege escalation was with sudo in the perl binary.
@@ -21,6 +14,13 @@ The exploit for this machine is on the end of the post.
 
 **Have a good time!**
 
+
+
+# Introdution
+
+[https://app.hackthebox.com/machines/Shocker](https://app.hackthebox.com/machines/Shocker)
+
+* **IP:** 10.10.10.56
 
 ## Diagram
 

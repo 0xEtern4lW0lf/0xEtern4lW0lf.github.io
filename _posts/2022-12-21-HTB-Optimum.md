@@ -7,10 +7,6 @@ render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Optimum.png
 ---
 
-# Introdution
-
-[https://app.hackthebox.com/machines/Optimum](https://app.hackthebox.com/machines/Optimum)
-
 This is a easy Windows box. Enumerating the port 80, a webapp is discovered: Http File Server 2.3. 
 
 This webapp is vulnerable to RCE. I get the kotas user, that has admin permissions.
@@ -18,6 +14,13 @@ This webapp is vulnerable to RCE. I get the kotas user, that has admin permissio
 The exploit for this machine is on the end of the post.
 
 **Have a good time!**
+
+
+# Introdution
+
+[https://app.hackthebox.com/machines/Optimum](https://app.hackthebox.com/machines/Optimum)
+
+* **IP:** 10.10.10.8
 
 
 ## Diagram

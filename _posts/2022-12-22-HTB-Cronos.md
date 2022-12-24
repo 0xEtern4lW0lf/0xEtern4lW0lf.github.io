@@ -6,11 +6,6 @@ mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Cronos.png
 ---
 
-
-# Introdution
-
-[https://app.hackthebox.com/machines/Cronos](https://app.hackthebox.com/machines/Cronos)
-
 This machine was an medium box Linux from HackTheBox. Your entrypoint is with Web app.
 
 There’re a page login  where It’s possible bypass SQL Injection. After login there’re a field vulnerable to RCE where we got shell.
@@ -20,6 +15,13 @@ Privilege escalation is replacing a script in `cron` running as root with a reve
 The exploit for this machine is on the end of the post.
 
 **Have a good time!**
+
+
+# Introdution
+
+[https://app.hackthebox.com/machines/Cronos](https://app.hackthebox.com/machines/Cronos)
+
+* **IP:** 10.10.10.13
 
 ## Diagram
 

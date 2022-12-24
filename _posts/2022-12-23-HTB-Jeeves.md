@@ -7,15 +7,17 @@ render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Jeeves/Jeeves.png
 ---
 
-# Introdution
-
-[https://app.hackthebox.com/machines/Jeeves](https://app.hackthebox.com/machines/Jeeves)
-
 This machine was an medium box Linux from HackTheBox. Your entrypoint is with Web app in port 50000, Jenkins. Jenkins has a known RCE vuln. To escalate privilege is found a file `.kdbx` that is a password database. There’re a hash Administrator.
 
 The exploit for this machine is on the end of the post.
 
 **Have a good time!**
+
+# Introdution
+
+[https://app.hackthebox.com/machines/Jeeves](https://app.hackthebox.com/machines/Jeeves)
+
+* **IP:** 10.10.10.63
 
 ## Diagram
 

@@ -6,13 +6,16 @@ mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Legacy/Legacy.png
 ---
 
+This is a box Windows easy, where is possible to explore the vuln EternalBlue.
+
+**Have a good time!**
+
+
 # Introdution
 
 [https://app.hackthebox.com/machines/Legacy](https://app.hackthebox.com/machines/Legacy)
 
-This is a box Windows easy, where is possible to explore the vuln EternalBlue.
-
-**Have a good time!**
+* **IP:** 10.10.10.4
 
 ## Diagram
 
