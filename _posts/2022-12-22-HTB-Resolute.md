@@ -1,7 +1,7 @@
 ---
 title: "Resolute - HTB"
-categories: [Medium]
-tags: [Windows,Medium,RPC,PasswordSpray,DNSAdmin,AD]
+categories: [HackTheBox,Medium]
+tags: [HTB,Windows,Medium,RPC,PasswordSpray,DNSAdmin,AD]
 mermaid: true
 render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Resolute/Resolute.png

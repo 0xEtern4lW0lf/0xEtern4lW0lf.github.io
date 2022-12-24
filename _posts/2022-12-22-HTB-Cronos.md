@@ -1,7 +1,7 @@
 ---
 title: "Cronos - HTB"
-categories: [Medium]
-tags: [Medium,Linux,Web,RCE,SQLi,Cron,]
+categories: [HackTheBox,Medium]
+tags: [HTB,Medium,Linux,Web,RCE,SQLi,Cron,]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Cronos.png
 ---

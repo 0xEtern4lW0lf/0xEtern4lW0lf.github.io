@@ -1,7 +1,7 @@
 ---
 title: "Backdoor - HTB"
-categories: [Easy]
-tags: [Easy,Linux,Web,WordPress,DirectoryTraversal,PathTraversal,Screen,EnumProcess]
+categories: [HackTheBox,Easy]
+tags: [HTB,Easy,Linux,Web,WordPress,DirectoryTraversal,PathTraversal,Screen,EnumProcess]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Backdoor.png
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Jeeves - HTB"
-categories: [Medium]
-tags: [Windows,Medium,Web,WebAPP,KeePass,Jenkins,AD,RCE]
+categories: [HackTheBox,Medium]
+tags: [HTB,Windows,Medium,Web,WebAPP,KeePass,Jenkins,AD,RCE]
 mermaid: true
 render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Jeeves/Jeeves.png

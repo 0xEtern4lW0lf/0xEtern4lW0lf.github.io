@@ -1,7 +1,7 @@
 ---
 title: "Optimum - HTB"
-categories: [Easy]
-tags: [Windows,Easy,Web,RCE,HFS]
+categories: [HackTheBox,Easy]
+tags: [HTB,Windows,Easy,Web,RCE,HFS]
 mermaid: true
 render_with_liquid: false
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Optimum/Optimum.png
