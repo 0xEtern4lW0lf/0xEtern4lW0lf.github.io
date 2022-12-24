@@ -1,6 +1,6 @@
 ---
 title: "Resolute - HTB"
-categories: [Windows, Medium]
+categories: [Medium,Windows]
 tags: [Windows,Medium,RPC,PasswordSpray,DNSAdmin,AD]
 mermaid: true
 render_with_liquid: false

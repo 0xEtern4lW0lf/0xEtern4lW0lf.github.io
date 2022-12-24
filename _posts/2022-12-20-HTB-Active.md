@@ -1,6 +1,6 @@
 ---
 title: "Active - HTB"
-categories: [Windows, Easy]
+categories: [Easy,Windows]
 tags: [Easy,Windows,Kerberoasting,Kerberos,AD,SMB]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Active/Active.png

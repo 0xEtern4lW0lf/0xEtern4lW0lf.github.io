@@ -1,6 +1,6 @@
 ---
 title: "Legacy - HTB"
-categories: [Windows, Easy]
+categories: [Easy,Windows]
 tags: [Easy,Windows,EternalBlue,SMB,Metasploit]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Legacy/Legacy.png

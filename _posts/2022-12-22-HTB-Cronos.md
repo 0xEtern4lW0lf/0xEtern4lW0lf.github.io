@@ -1,6 +1,6 @@
 ---
 title: "Cronos - HTB"
-categories: [Linux, Medium]
+categories: [Medium,Linux]
 tags: [Medium,Linux,Web,RCE,SQLi,Cron,]
 mermaid: true
 image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Cronos.png

@@ -1,6 +1,6 @@
 ---
 title: "Jeeves - HTB"
-categories: [Windows, Medium]
+categories: [Medium,Windows]
 tags: [Windows,Medium,Web,WebAPP,KeePass,Jenkins,AD,RCE]
 mermaid: true
 render_with_liquid: false
