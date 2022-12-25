@@ -365,3 +365,6 @@ if __name__ == '__main__':
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Jeeves/Untitled%2016.png)
+
+
+ More scripts in [https://github.com/0xEtern4lW0lf](https://github.com/0xEtern4lW0lf).
