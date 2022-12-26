@@ -8,7 +8,7 @@ image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Pandora.png
 ---
 
 
-This is a Linux easy machine. To get the shell is need enum **SNMP**. There’re the user daniel credential was found. After login SSH, into machine is discovered a page web in localhost ]being necessary to tunnel out. The web page run a web app called `Pandora FMS` that is vuln to SQLi and RCE. Exploring this we gain shell of user matt. To priv esc it is necessary do `path hijack`.
+This is a Linux easy machine. To get the shell is need enum **SNMP**. There’re the user daniel credential was found. After login SSH, into machine is discovered a page web in localhost ]being necessary to tunnel out. The web page run a web app called `Pandora FMS` that is vuln to SQLi and RCE. Exploring this we gain shell of user matt. To priv esc it is necessary do `Hijack Path`.
 
 The exploit for this machine is on the end of the post.
 
