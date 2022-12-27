@@ -60,7 +60,7 @@ I’ll add `panda.htb` to my `/etc/hosts`{: .filepath} file, but the same pa
 
 ## Port 161 (SNMP - UDP)
 
-I’ll run the `snmp-check` that has a friendlier ****output.
+I’ll run the `snmp-check` that has a friendlier output.
 
 Analyzing the processes, we found a credential
 
