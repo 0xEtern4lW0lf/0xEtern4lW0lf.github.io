@@ -43,20 +43,20 @@ ports=$(sudo nmap -sTU --open -p- -Pn --min-rate=1000 -T4 10.10.11.136 | grep ^[
 ### UDP
 
 ```bash
-sudo nmap -sU -top-ports**=**100 10.10.11.136
+sudo nmap -sU -top-ports=100 10.10.11.136
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%201.png)
 
 ## Port 80 (HTTP)
 
-The site is for “Play”, and “extention of Panda.HTB”:
+The site is for `Play`, and extention of `Panda.HTB`:
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%202.png)
 
 All links lead to the same place on the page. There's a contact form at the bottom, but it doesn't seem to do anything.
 
-I’ll add `panda.htb` to my `/etc/hosts` file, but the same page is loaded.
+I’ll add `panda.htb` to my `/etc/hosts`{: .filepath} file, but the same page is loaded.
 
 ## Port 161 (SNMP - UDP)
 
@@ -194,7 +194,7 @@ The box has installed the `ltrace`, we ‘ll use for debug the **pandora_backup*
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%2018.png)
 
-The binary crashes because it doesn’t have permissions to `/root/.backup/pandora-backup.tar.gz`, which makes sense since `ltrace` drops the privs from SUID. Still, I’ll note that it’s using `system` to call `tar` without a full path.
+The binary crashes because it doesn’t have permissions to `/root/.backup/pandora-backup.tar.gz`{: .filepath}, which makes sense since `ltrace` drops the privs from SUID. Still, I’ll note that it’s using `system` to call `tar` without a full path.
 
 I can control that path, which makes this likely vulnerable to **path hijack**. I’ll work from `/tmp`, and add that to the current user’s `PATH`:
 
@@ -204,7 +204,7 @@ export PATH=/tmp:$PATH
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%2019.png)
 
-Now in `/tmp` i created a evil file called `tar`:
+Now in `/tmp`{: .filepath} i created a evil file called `tar`:
 
 ```bash
 echo -e '#!/bin/bash \nbash' > /tmp/tar

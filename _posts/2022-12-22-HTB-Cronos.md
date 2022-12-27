@@ -63,7 +63,7 @@ dig axfr @10.10.10.13 cronos.htb
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%202.png)
 
-We add the subdomain in `/etc/hosts`
+We add the subdomain in `/etc/hosts`{: .filepath}
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Cronos/Untitled%203.png)
 

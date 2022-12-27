@@ -81,7 +81,7 @@ crackmapexec smb 10.10.10.169 -u users -p 'Welcome123!' --continue-on-success
 
 We can login in SMB through credential:
 
-> User :**melanie**
+> User: **melanie**
 > 
 > Pass: **Welcome123!**
 
@@ -100,9 +100,9 @@ evil-winrm -i 10.10.10.169 -P 5985 -u melanie -p 'Welcome123!'
 
 A hidden file was found that revelate a credential of **ryan** user.
 
-> User: **ryan
+> User: **ryan**
 > 
-> Pass: Serv3r4Admin4cc123!**
+> Pass: **Serv3r4Admin4cc123!**
 > 
 
 ```bash

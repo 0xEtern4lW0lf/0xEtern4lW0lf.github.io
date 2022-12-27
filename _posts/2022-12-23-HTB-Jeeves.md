@@ -59,7 +59,7 @@ Didn't return anything interesting.
 We try fuzzing in port 50000, we found a URL that is running Jenkins Web App 
 
 ```bash
-gobuster dir -u [http://10.10.10.63:50000/](http://10.10.10.63:50000/) -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 100 -e --no-error -r -x txt,php,html
+gobuster dir -u http://10.10.10.63:50000/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 100 -e --no-error -r -x txt,php,html
 ```
 
 ```
@@ -76,7 +76,7 @@ This app, Jenkins, already has a known vulnerability that gives us a reverse she
 
 # Exploration
 
-## **Exploring Jenkins**
+## Exploring Jenkins
 
 > **Refer:** [https://blog.pentesteracademy.com/abusing-jenkins-groovy-script-console-to-get-shell-98b951fa64a6](https://blog.pentesteracademy.com/abusing-jenkins-groovy-script-console-to-get-shell-98b951fa64a6)
 >
