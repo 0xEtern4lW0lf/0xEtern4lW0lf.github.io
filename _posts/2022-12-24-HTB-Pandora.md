@@ -58,7 +58,7 @@ All links lead to the same place on the page. There's a contact form at the bott
 
 I’ll add `panda.htb` to my `/etc/hosts` file, but the same page is loaded.
 
-## **Port 161 (SNMP - UDP)**
+## Port 161 (SNMP - UDP)
 
 I’ll run the `snmp-check` that has a friendlier ****output.
 
@@ -71,17 +71,18 @@ snmp-check -c public 10.10.11.136
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%203.png)
 
 > User: **daniel** 
-Pass**: HotelBabylon23**
 > 
+> Pass: **HotelBabylon23**
+
 
 # Exploration
 
-## Getting the **Shell**
+## Getting the Shell
 
 With the credential found by looking at the machine's processes on port 161, we entered.
 
 ```bash
-**ssh 10.10.11.136 -l daniel**
+ssh 10.10.11.136 -l daniel
 ```
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%204.png)
@@ -130,13 +131,14 @@ This site shows some CVE for web app
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%2010.png)
 
-### **CVE-2021-32099**
+### CVE-2021-32099
 
 > **Refer:** [https://www.cvedetails.com/cve/CVE-2021-32099/](https://www.cvedetails.com/cve/CVE-2021-32099/)
 > 
 > 
 > ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%2011.png)
 > 
+{: .prompt-info }
 
 This is the commant that allows bypass login as admin.
 
@@ -187,7 +189,8 @@ find / -perm -4000 -ls 2>/dev/null
 The box has installed the `ltrace`, we ‘ll use for debug the **pandora_backup** binary.
 
 > ltrace  is  a  program  that  intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.  It can also intercept and print the system calls executed by the program.
-> 
+>
+{: .prompt-info }
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Pandora/Untitled%2018.png)
 
