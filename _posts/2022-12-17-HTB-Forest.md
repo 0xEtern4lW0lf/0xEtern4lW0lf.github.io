@@ -42,7 +42,7 @@ ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.161 | grep ^[0-9] | cut -
 [](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/scan-forest.png)
 
  
-We identified the `htb.local` domain, so add it in `/etc/hosts`{: .filepath}
+We identified the `htb.local` domain, so add it in `/etc/hosts`
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Forest/Untitled.png)
 

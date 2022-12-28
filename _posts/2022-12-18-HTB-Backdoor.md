@@ -248,7 +248,7 @@ python3.8 -c "import pty; pty.spawn('/bin/bash')"
 
 ## Privilege Escalation
 
-Enumerating the existing processes, we see that something is running `screen` as root (in a loop) as root. This command checks the `/var/run/screen/S-root`{: .filepath} directory every one second, if empty it creates a root session on screen.
+Enumerating the existing processes, we see that something is running `screen` as root (in a loop) as root. This command checks the `/var/run/screen/S-root` directory every one second, if empty it creates a root session on screen.
 
 ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Backdoor/Untitled%2017.png)
 
