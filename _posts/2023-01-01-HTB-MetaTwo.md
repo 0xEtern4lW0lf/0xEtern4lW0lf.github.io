@@ -1,22 +1,25 @@
-# MetaTwo
+---
+title: "MetaTwo - HTB"
+categories: [HackTheBox,Easy]
+tags: [HTB,Linux,Easy,Web,WordPress,SQLi,XXE,Passpie]
+mermaid: true
+image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/MetaTwo.png
+---
 
-# Summary
 
-- [Introdution](https://www.notion.so/MetaTwo-fd71010fbfd744d882545c2d4c61df85)
-- [Enumeration](https://www.notion.so/MetaTwo-fd71010fbfd744d882545c2d4c61df85)
-- [Exploration](https://www.notion.so/MetaTwo-fd71010fbfd744d882545c2d4c61df85)
-- [Post Exploration](https://www.notion.so/MetaTwo-fd71010fbfd744d882545c2d4c61df85)
-- [Script Read File](https://www.notion.so/MetaTwo-fd71010fbfd744d882545c2d4c61df85)
+This is a easy linux machine. In port 80 is running a WordPress vulnerable **SQL Injection and WordPress XXE Vulnerability**. Accessing file config wordpress, you gain credential FTP. In FTP there’re credential `jnelson` user. Logging SSH, you will escalate priv by  `passpie`.
+
+The exploit for this machine is on the end of the post.
+
+**Have a good time!**
+
 
 # Introdution
 
 [https://app.hackthebox.com/machines/MetaTwo](https://app.hackthebox.com/machines/MetaTwo)
 
-This is a easy linux machine. In port 80 is running a WordPress vulnerable **SQL Injection and WordPress XXE Vulnerability***. *****Accessing file config wordpress, you gain credential FTP. In FTP there’re credential **`jnelson`** user. Logging SSH, you will escalate priv by  **`passpie`.**
+* **IP:** 10.10.11.186
 
-The exploit for this machine is on the end of the post.
-
-**Have a good time!**
 
 ## Diagram
 
@@ -38,13 +41,13 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -Pn -sC -sV -p $ports 10.10.11.186
 ```
 
-![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled.png)
+![Untitled](Mhttps://0xetern4lw0lf.github.io/assets/img/HTB/HTB-MetaTwo/Untitled.png)
 
 Nmap tell us there are three open ports **`21 ftp`** **`22 ssh`** and **`80 http`** and HTTP port redirect to **http://metapress.htb/**
 
-Add that in **`/etc/hosts`** file.
+Add that in `/etc/hosts` file.
 
-## **Port 80 (http)**
+## Port 80 (HTTP)
 
 ### Metapress.htb
 
@@ -64,10 +67,11 @@ Checking the **`source code`** of that page, we got to know that it's using **
 
 ## CVE-2022-0739
 
-Refer: [https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357](https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357)
-
+> Refer: [https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357](https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357)
+>
 > ***The plugin fails to properly sanitize user supplied POST data before it is used in a dynamically constructed SQL query via the bookingpress_front_get_category_services AJAX action (available to unauthenticated users), leading to an unauthenticated SQL Injection***
-> 
+>
+{: .prompt-info }
 
 For the **`exploit`** work, we need some info about **`_wpnonce`** which can be found in **`events`** page source code
 
@@ -130,8 +134,9 @@ john hashes -w=/usr/share/wordlists/rockyou.txt
 ![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2010.png)
 
 > User: **manager**
-Pass: **partylikearockstar**
-> 
+>
+> Pass: **partylikearockstar**
+ 
 
 `http://metapress.htb/wp-login.php`
 
@@ -139,10 +144,11 @@ Pass: **partylikearockstar**
 
 ## CVE-2021-29447
 
-Refer : **https://tryhackme.com/room/wordpresscve202129447**
-
+> Refer : **[https://tryhackme.com/room/wordpresscve202129447](https://tryhackme.com/room/wordpresscve202129447)**
+>
 > Researchers at security firm SonarSource discovered an XML external entity injection (XXE) security flaw in the WordPress Media Library. The vulnerability can be exploited only when this CMS runs in PHP 8 and the attacking user has permissions to upload media files. Take note of the latter condition as we walk through an example of exploiting this vulnerability below.
-> 
+>
+{: .prompt-info }
 
 For the **`exploitation`**, we need to create a **`WAV`** file which will fetch the another file called **`0xetern4lw0lf.dtd`** which has our malicious content inside.
 
@@ -200,8 +206,9 @@ And we got the path **`/var/www/metapress.htb/blog`**
 - FTP user creads
     
     > User: **metapress.htb**
-    Pass: **9NYS_ii@FyL_p5M2NvJ**
-    > 
+    >
+    > Pass: **9NYS_ii@FyL_p5M2NvJ**
+     
 
 Successfully login inside the **`FTP`** server
 
@@ -214,8 +221,9 @@ Got a **`send_email.php`** file
 - Creads For Jnelson User
     
     > User: **jnelson**
-    Pass: **Cb4_JmWM8zUZWMu@Ys**
-    > 
+    >
+    > Pass: **Cb4_JmWM8zUZWMu@Ys**
+     
 
 ```bash
 ssh jnelson@10.10.11.186
@@ -270,8 +278,9 @@ Export the passwords in **`pass`** file
 ![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2024.png)
 
 > User: **root**
-Pass: **p7qfAZt4_A1xo_0x**
-> 
+>
+> Pass: **p7qfAZt4_A1xo_0x**
+
 
 ![Untitled](MetaTwo%20fd71010fbfd744d882545c2d4c61df85/Untitled%2025.png)
 
@@ -283,7 +292,7 @@ This is a script in python that allow read files this machine.
 
 `metatwo-readfile.py`
 
-```bash
+```python
 #! /usr/bin/env python3
 
 #### Title: Exploit Read File - WordPress XXE Vuln Authenticated
