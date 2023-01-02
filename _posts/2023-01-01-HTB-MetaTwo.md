@@ -583,3 +583,7 @@ if __name__ == '__main__':
     banner()
     main()
 ```
+
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Shocker/Untitled%2013.png)
+
+ More scripts in [https://github.com/0xEtern4lW0lf](https://github.com/0xEtern4lW0lf).
