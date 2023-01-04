@@ -7,12 +7,11 @@ User-agent: *
 
 Allow: /posts/
 
-Disallow: /norobots/
-
 Disallow: /tags/
 
 Disallow: /categories/
 
 Disallow: /about/
 
-Sitemap: {{ '/sitemap.xml' | absolute_url }}
+Disallow: /archives/
+
